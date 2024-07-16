@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CollectablesManager : MonoBehaviour
 {
     public static CollectablesManager instance;
     public Image cardImage; // UI Image to display the new card face
     public GameObject unlockMessagePanel; // UI Panel for the unlock message
-    public Text unlockMessageText; // Text component for the unlock message
+    public TextMeshProUGUI unlockMessageText; // Text component for the unlock message
     public Sprite[] cardFaces; // Array of card faces
 
     private int currentLevel = 0;
