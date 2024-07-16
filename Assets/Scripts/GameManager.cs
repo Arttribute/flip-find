@@ -90,4 +90,22 @@ public class GameManager : MonoBehaviour
         }
         return list;
     }
+    void CheckLevelCompletion()
+    {
+        bool isMatched = true;
+
+        foreach (Card card in cards)
+        {
+            if (!card.isMatched)
+            {
+                isMatched = false;
+                break;
+            }
+        }
+
+        if (isMatched)
+        {
+            CollectablesManager.instance.OnLevelUp();
+        }
+    }
 }
