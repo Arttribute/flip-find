@@ -68,6 +68,8 @@ public class GameManager : MonoBehaviour
         {
             firstFlippedCard.isMatched = true;
             secondFlippedCard.isMatched = true;
+           /*UIManager.Instance.AddScore(10); // Add points for a correct match
+            CheckLevelCompletion();*/
         }
         else
         {
@@ -90,7 +92,7 @@ public class GameManager : MonoBehaviour
         }
         return list;
     }
-    void CheckLevelCompletion()
+    /*void CheckLevelCompletion()
     {
         bool isMatched = true;
 
@@ -107,5 +109,5 @@ public class GameManager : MonoBehaviour
         {
             CollectablesManager.instance.OnLevelUp();
         }
-    }
+    }*/
 }
