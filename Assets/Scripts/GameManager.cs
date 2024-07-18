@@ -10,8 +10,6 @@ public class GameManager : MonoBehaviour
     public Transform gridTransform;
     public Transform fullImageTransform; // Reference to the UI element to show full image
     public Image fullImageDisplay; // Image component to display the full image
-
-    public Text scoreText;
     public Sprite[] cardImages;
     private Card firstFlippedCard;
     private Card secondFlippedCard;
