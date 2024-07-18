@@ -7,6 +7,7 @@ public class Card : MonoBehaviour
 
     public Sprite cardFront;
     public Sprite cardBack;
+    public Sprite fullImage;
     private Image image;
     private bool isFlipped = false;
     public bool isMatched = false;
@@ -21,9 +22,10 @@ public class Card : MonoBehaviour
 
     }
 
-    public void SetCardImage(Sprite frontImage)
+    public void SetCardImages(Sprite frontImage, Sprite fullImage)
     {
         cardFront = frontImage;
+        this.fullImage = fullImage;
     }
 
     public void ShowCardFront()
