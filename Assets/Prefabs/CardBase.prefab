@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 188800003510865650}
   - component: {fileID: 7979261344527494141}
   m_Layer: 5
-  m_Name: Card
+  m_Name: CardBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,8 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardFront: {fileID: 21300000, guid: 20ba830adad29b141a80c4e049e3101b, type: 3}
   cardBack: {fileID: 21300000, guid: 58f0c17a07f7f7d428f11f3eaa3f8c3f, type: 3}
-  fullImage: {fileID: 0}
-  isMatched: 0
 --- !u!1 &4799581268817255704
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,12 +160,12 @@ GameObject:
   - component: {fileID: 1239870599647865054}
   - component: {fileID: 5488207140939583266}
   m_Layer: 5
-  m_Name: SplitImage
+  m_Name: CardFront
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1275587443730172295
 RectTransform:
   m_ObjectHideFlags: 0
@@ -182,10 +180,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 6104304590560626455}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1239870599647865054
 CanvasRenderer:
