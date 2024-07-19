@@ -13,6 +13,8 @@ public class UIManager : MonoBehaviour
     private int _currentScore;
     private int _highScore;
 
+    public int CurrentScore => _currentScore; // Add this property
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -58,6 +60,6 @@ public class UIManager : MonoBehaviour
 
     private void UpdateCurrentScoreUI()
     {
-        _currentScoreText.text = "High Score: " + _currentScore.ToString();
+        _currentScoreText.text = "SCORE: " + _currentScore.ToString();
     }
 }

@@ -77,8 +77,7 @@ public class GameManager : MonoBehaviour
             // Update score
             UIManager.Instance.AddScore(10); // Add points for a correct match
 
-            // Uncomment if you want to add level completion logic
-            // CheckLevelCompletion();
+            CheckLevelCompletion();
         }
         else
         {
@@ -93,22 +92,10 @@ public class GameManager : MonoBehaviour
 
     private void CheckLevelCompletion()
     {
-        bool allMatched = true;
-
-        foreach (Transform child in gridTransform)
+        if (UIManager.Instance.CurrentScore >= 30)
         {
-            Card card = child.GetComponent<Card>();
-            if (!card.isMatched)
-            {
-                allMatched = false;
-                break;
-            }
-        }
-
-        if (allMatched)
-        {
-            // Uncomment if you have a CollectiblesManager to handle level up
-            // CollectiblesManager.Instance.OnLevelUp();
+            CollectablesManager.instance.OnLevelUp();
+            UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
         }
     }
 }
