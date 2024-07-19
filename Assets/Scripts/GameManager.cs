@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public Sprite[] cardImages;
     private Card firstFlippedCard;
     private Card secondFlippedCard;
-
+        
     private void Awake()
     {
         Instance = this;
@@ -92,21 +92,21 @@ public class GameManager : MonoBehaviour
     }
 }
 
-//void CheckLevelCompletion()
-// {
-//     bool isMatched = true;
+void CheckLevelCompletion()
+ {
+     bool isMatched = true;
 
-//     foreach (Card card in cards)
-//     {
-//         if (!card.isMatched)
-//         {
-//             isMatched = false;
-//             break;
-//         }
-//     }
+     foreach (Card card in cards)
+     {
+         if (!card.isMatched)
+         {
+             isMatched = false;
+             break;
+         }
+    }
 
-//     if (isMatched)
-//     {
-//         CollectablesManager.instance.OnLevelUp();
-//     }
-// }
+     if (isMatched)
+     {
+         CollectablesManager.instance.OnLevelUp();
+     }
+ }
