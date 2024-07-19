@@ -69,16 +69,16 @@ public class GameManager : MonoBehaviour
 
         if (firstFlippedCard.cardFront == secondFlippedCard.cardFront)
         {
-
             // Match found
-            // Here you can add code to disable or remove the matched cards
             fullImageDisplay.sprite = firstFlippedCard.cardFront;
-
             firstFlippedCard.SetMatched();
             secondFlippedCard.SetMatched();
 
-            //firstFlippedCard.gameObject.SetActive(false);
-            //secondFlippedCard.gameObject.SetActive(false);
+            // Update score
+            UIManager.Instance.AddScore(10); // Add points for a correct match
+
+            // Uncomment if you want to add level completion logic
+            // CheckLevelCompletion();
         }
         else
         {
@@ -90,23 +90,25 @@ public class GameManager : MonoBehaviour
         firstFlippedCard = null;
         secondFlippedCard = null;
     }
+
+    private void CheckLevelCompletion()
+    {
+        bool allMatched = true;
+
+        foreach (Transform child in gridTransform)
+        {
+            Card card = child.GetComponent<Card>();
+            if (!card.isMatched)
+            {
+                allMatched = false;
+                break;
+            }
+        }
+
+        if (allMatched)
+        {
+            // Uncomment if you have a CollectiblesManager to handle level up
+            // CollectiblesManager.Instance.OnLevelUp();
+        }
+    }
 }
-
-//void CheckLevelCompletion()
-// {
-//     bool isMatched = true;
-
-//     foreach (Card card in cards)
-//     {
-//         if (!card.isMatched)
-//         {
-//             isMatched = false;
-//             break;
-//         }
-//     }
-
-//     if (isMatched)
-//     {
-//         CollectablesManager.instance.OnLevelUp();
-//     }
-// }
