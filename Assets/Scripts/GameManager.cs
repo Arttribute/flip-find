@@ -86,13 +86,14 @@ public class GameManager : MonoBehaviour
             secondFlippedCard.ShowCardBack();
         }
 
+        // Reset flipped cards
         firstFlippedCard = null;
         secondFlippedCard = null;
     }
 
     private void CheckLevelCompletion()
     {
-        if (UIManager.Instance.CurrentScore >= 30)
+        if (UIManager.Instance.CurrentScore >= 60)
         {
             CollectablesManager.instance.OnLevelUp();
             UIManager.Instance.ResetScore(); // Optionally reset the score for the next level

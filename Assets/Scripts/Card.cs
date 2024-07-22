@@ -28,7 +28,6 @@ public class Card : MonoBehaviour
             image.sprite = cardFront;
             isFlipped = true;
         }
-
     }
 
     public void ShowCardBack()
@@ -38,12 +37,11 @@ public class Card : MonoBehaviour
             image.sprite = cardBack;
             isFlipped = false;
         }
-
     }
 
     public void OnCardClicked()
     {
-        if (!isFlipped)
+        if (!isFlipped && !isMatched)
         {
             ShowCardFront();
             GameManager.Instance.OnCardFlipped(this);
