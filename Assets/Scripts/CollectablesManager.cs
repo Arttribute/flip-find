@@ -11,6 +11,7 @@ public class CollectablesManager : MonoBehaviour
     public GameObject unlockMessagePanel; // UI Panel for the unlock message
     public TextMeshProUGUI unlockMessageText; // Text component for the unlock message
     public Sprite[] cardFaces; // Array of card faces
+    public TextMeshProUGUI scoreMessage; // Text component for the score message
 
     private int currentLevel = 0;
 
@@ -29,6 +30,7 @@ public class CollectablesManager : MonoBehaviour
     void Start()
     {
         LoadCardFace();
+        HideScoreMessage();
     }
 
     public void OnLevelUp()
@@ -56,5 +58,17 @@ public class CollectablesManager : MonoBehaviour
     private void HideUnlockMessage()
     {
         unlockMessagePanel.SetActive(false);
+    }
+
+    public void ShowScoreMessage()
+    {
+        scoreMessage.text = "+10";
+        scoreMessage.gameObject.SetActive(true);
+        Invoke("HideScoreMessage", 1.0f); // Hide the message after 1 second
+    }
+
+    private void HideScoreMessage()
+    {
+        scoreMessage.gameObject.SetActive(false);
     }
 }
