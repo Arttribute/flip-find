@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public Transform fullImageTransform; // Reference to the UI element to show full image
     public Image fullImageDisplay; // Image component to display the full image
     public Sprite[] cardImages;
+    private Timer timer;
     private Card firstFlippedCard;
     private Card secondFlippedCard;
 
@@ -21,7 +22,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+
         GenerateCards();
+        timer.ResetTimer();
     }
 
     void GenerateCards()
