@@ -7,7 +7,7 @@ public class Card : MonoBehaviour
     public Sprite cardBack; // Image of the card's back
     private Image image;
     private bool isFlipped = false;
-    [SerializeField] public bool isMatched = false;
+    public bool isMatched = false;
 
     private void Start()
     {

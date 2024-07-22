@@ -7,13 +7,11 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
-    [SerializeField] private TextMeshProUGUI _highScoreText;
     [SerializeField] private TextMeshProUGUI _currentScoreText;
 
     private int _currentScore;
-    private int _highScore;
 
-    public int CurrentScore => _currentScore; // Add this property
+    public int CurrentScore => _currentScore; // Property to access current score
 
     void Awake()
     {
@@ -30,32 +28,19 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
-        _highScore = PlayerPrefs.GetInt("HighScore", 0);
-        UpdateHighScoreUI();
+        ResetScore(); // Initialize the score at the start
     }
 
     public void AddScore(int points)
     {
         _currentScore += points;
         UpdateCurrentScoreUI();
-
-        if (_currentScore > _highScore)
-        {
-            _highScore = _currentScore;
-            PlayerPrefs.SetInt("HighScore", _highScore);
-            UpdateHighScoreUI();
-        }
     }
 
     public void ResetScore()
     {
         _currentScore = 0;
         UpdateCurrentScoreUI();
-    }
-
-    private void UpdateHighScoreUI()
-    {
-        _highScoreText.text = "BEST: " + _highScore.ToString();
     }
 
     private void UpdateCurrentScoreUI()
