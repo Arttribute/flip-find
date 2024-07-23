@@ -7,8 +7,8 @@ public class MenuAnim : MonoBehaviour
 {
     [SerializeField] private RectTransform menuTransform;
     [SerializeField] private float animationDuration = 0.5f;
-    [SerializeField] private Vector2 hiddenPosition;
-    [SerializeField] private Vector2 shownPosition;
+    [SerializeField] private Vector2 hiddenPosition = new Vector2(-Screen.width, 0); // Initially off-screen to the left
+    [SerializeField] private Vector2 shownPosition = new Vector2(0, 0); // Centered position
 
     private bool isMenuShown = false;
 
