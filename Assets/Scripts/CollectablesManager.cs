@@ -76,11 +76,11 @@ public class CollectablesManager : MonoBehaviour
 
     private void AnimateCard()
     {
-        // Animate the card image to move from left to right
-        Vector3 startPosition = new Vector3(-Screen.width, cardImage.rectTransform.anchoredPosition.y, 0);
-        Vector3 endPosition = new Vector3(Screen.width, cardImage.rectTransform.anchoredPosition.y, 0);
+        // Animate the card image to move from left to center
+        Vector3 startPosition = new Vector3(-Screen.width / 2, cardImage.rectTransform.anchoredPosition.y, 0);
+        Vector3 endPosition = new Vector3(0, cardImage.rectTransform.anchoredPosition.y, 0);
 
         cardImage.rectTransform.anchoredPosition = startPosition;
-        cardImage.rectTransform.DOAnchorPos(endPosition, 2.0f).SetEase(Ease.Linear);
+        cardImage.rectTransform.DOAnchorPos(endPosition, 1.0f).SetEase(Ease.Linear);
     }
 }
