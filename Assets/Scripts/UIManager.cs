@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject pauseMenuPanel; // Reference to the pause menu panel
     [SerializeField] private Button pauseButton; // Reference to the pause button
     [SerializeField] private Button resumeButton; // Reference to the resume button
+    [SerializeField] private MenuAnim menuAnim; // Reference to the MenuAnim script
 
     private int _currentScore;
 
@@ -61,13 +62,13 @@ public class UIManager : MonoBehaviour
 
     private void PauseGame()
     {
-        pauseMenuPanel.SetActive(true); // Show the pause menu
+        menuAnim.ShowMenu(); // Show the menu with animation
         Time.timeScale = 0f; // Pause the game
     }
 
     private void ResumeGame()
     {
-        pauseMenuPanel.SetActive(false); // Hide the pause menu
+        menuAnim.HideMenu(); // Hide the menu with animation
         Time.timeScale = 1f; // Resume the game
     }
 }

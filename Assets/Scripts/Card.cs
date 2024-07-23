@@ -6,7 +6,7 @@ public class Card : MonoBehaviour
     public Sprite cardFront; // Image of the card's front
     public Sprite cardBack; // Image of the card's back
     private Image image;
-    private bool isFlipped = false;
+    public bool isFlipped = false;
     public bool isMatched = false;
 
     private void Start()
@@ -43,8 +43,7 @@ public class Card : MonoBehaviour
     {
         if (!isFlipped && !isMatched)
         {
-            ShowCardFront();
-            GameManager.Instance.OnCardFlipped(this);
+            GetComponent<CardAnim>().Flip();
         }
     }
 
