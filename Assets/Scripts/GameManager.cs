@@ -22,7 +22,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-
         GenerateCards();
         timer.ResetTimer();
     }
@@ -38,6 +37,8 @@ public class GameManager : MonoBehaviour
             GameObject cardObject = Instantiate(cardPrefab, gridTransform);
             Card card = cardObject.GetComponent<Card>();
             card.SetCardImage(image);
+            CardAnim cardAnim = cardObject.GetComponent<CardAnim>();
+            cardAnim.Init(card); // Initialize CardAnim with the Card reference
         }
     }
 
@@ -88,8 +89,8 @@ public class GameManager : MonoBehaviour
         else
         {
             // No match, flip cards back
-            firstFlippedCard.ShowCardBack();
-            secondFlippedCard.ShowCardBack();
+            firstFlippedCard.GetComponent<CardAnim>().FlipBack();
+            secondFlippedCard.GetComponent<CardAnim>().FlipBack();
         }
 
         // Reset flipped cards

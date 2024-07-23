@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7348648222949968008}
   - component: {fileID: 188800003510865650}
   - component: {fileID: 7979261344527494141}
+  - component: {fileID: 7432542072754991153}
   m_Layer: 5
   m_Name: CardBase
   m_TagString: Untagged
@@ -148,6 +149,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardFront: {fileID: 21300000, guid: 20ba830adad29b141a80c4e049e3101b, type: 3}
   cardBack: {fileID: 21300000, guid: 58f0c17a07f7f7d428f11f3eaa3f8c3f, type: 3}
+  isFlipped: 0
+  isMatched: 0
+--- !u!114 &7432542072754991153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3738803293752949360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72afd2e61d6a95a4685b424af8d8d0ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4799581268817255704
 GameObject:
   m_ObjectHideFlags: 0
