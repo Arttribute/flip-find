@@ -5,9 +5,11 @@ public class Card : MonoBehaviour
 {
     public Sprite cardFront; // Image of the card's front
     public Sprite cardBack; // Image of the card's back
+    public bool IsFlipped => isFlipped;
+    public bool IsMatched => isMatched;
     private Image image;
-    public bool isFlipped = false;
-    public bool isMatched = false;
+    private bool isFlipped = false;
+    private bool isMatched = false;
 
     private void Start()
     {

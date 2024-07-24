@@ -13,13 +13,13 @@ public class CardAnim : MonoBehaviour
 
     public void Flip()
     {
-        if (isAnimating || card.isMatched) return;
+        if (isAnimating || card.IsMatched) return;
 
         isAnimating = true;
-        transform.DOScaleX(0, 0.2f).OnComplete(() => 
+        transform.DOScaleX(0, 0.2f).OnComplete(() =>
         {
             card.ShowCardFront();
-            transform.DOScaleX(1, 0.2f).OnComplete(() => 
+            transform.DOScaleX(1, 0.2f).OnComplete(() =>
             {
                 isAnimating = false;
                 GameManager.Instance.OnCardFlipped(card);
@@ -29,13 +29,13 @@ public class CardAnim : MonoBehaviour
 
     public void FlipBack()
     {
-        if (isAnimating || card.isMatched) return;
+        if (isAnimating || card.IsMatched) return;
 
         isAnimating = true;
-        transform.DOScaleX(0, 0.2f).OnComplete(() => 
+        transform.DOScaleX(0, 0.2f).OnComplete(() =>
         {
             card.ShowCardBack();
-            transform.DOScaleX(1, 0.2f).OnComplete(() => 
+            transform.DOScaleX(1, 0.2f).OnComplete(() =>
             {
                 isAnimating = false;
             });
