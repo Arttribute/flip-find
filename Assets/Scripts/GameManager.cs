@@ -1,82 +1,45 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManager Instance;
     public GameObject cardPrefab;
     public Transform gridTransform;
+    public Transform fullImageTransform; // Reference to the UI element to show full image
+    public Image fullImageDisplay; // Image component to display the full image
     public Sprite[] cardImages;
-    private List<Card> cards = new List<Card>();
+    private Timer timer;
     private Card firstFlippedCard;
     private Card secondFlippedCard;
 
-    void Awake()
+    private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        Instance = this;
     }
 
     void Start()
     {
         GenerateCards();
+        timer.ResetTimer();
     }
 
     void GenerateCards()
     {
-        List<Sprite> images = new List<Sprite>();
+        List<Sprite> images = new List<Sprite>(cardImages);
         images.AddRange(cardImages); // Duplicate images for pairs
-        images.AddRange(cardImages);
-
-        // Shuffle images
         images = ShuffleList(images);
 
-        for (int i = 0; i < images.Count; i++)
+        foreach (Sprite image in images)
         {
             GameObject cardObject = Instantiate(cardPrefab, gridTransform);
             Card card = cardObject.GetComponent<Card>();
-            card.SetCardImage(images[i]);
-            cards.Add(card);
+            card.SetCardImage(image);
+            CardAnim cardAnim = cardObject.GetComponent<CardAnim>();
+            cardAnim.Init(card); // Initialize CardAnim with the Card reference
         }
-    }
-
-    public void OnCardFlipped(Card flippedCard)
-    {
-        if (firstFlippedCard == null)
-        {
-            firstFlippedCard = flippedCard;
-        }
-        else if (secondFlippedCard == null)
-        {
-            secondFlippedCard = flippedCard;
-            StartCoroutine(CheckForMatch());
-        }
-    }
-
-    IEnumerator CheckForMatch()
-    {
-        yield return new WaitForSeconds(1);
-
-        if (firstFlippedCard.cardFront == secondFlippedCard.cardFront)
-        {
-            firstFlippedCard.isMatched = true;
-            secondFlippedCard.isMatched = true;
-        }
-        else
-        {
-            firstFlippedCard.ShowCardBack();
-            secondFlippedCard.ShowCardBack();
-        }
-
-        firstFlippedCard = null;
-        secondFlippedCard = null;
     }
 
     List<Sprite> ShuffleList(List<Sprite> list)
@@ -90,22 +53,57 @@ public class GameManager : MonoBehaviour
         }
         return list;
     }
-    void CheckLevelCompletion()
-    {
-        bool isMatched = true;
 
-        foreach (Card card in cards)
+    public void OnCardFlipped(Card card)
+    {
+        if (firstFlippedCard == null)
         {
-            if (!card.isMatched)
-            {
-                isMatched = false;
-                break;
-            }
+            firstFlippedCard = card;
+        }
+        else if (secondFlippedCard == null)
+        {
+            secondFlippedCard = card;
+            StartCoroutine(CheckForMatch());
+        }
+    }
+
+    private IEnumerator CheckForMatch()
+    {
+        yield return new WaitForSeconds(1); // Wait for a second to let the player see the flipped cards
+
+        if (firstFlippedCard.cardFront == secondFlippedCard.cardFront)
+        {
+            // Match found
+            fullImageDisplay.sprite = firstFlippedCard.cardFront;
+            firstFlippedCard.SetMatched();
+            secondFlippedCard.SetMatched();
+
+            // Show score message
+            CollectablesManager.instance.ShowScoreMessage();
+
+            // Update score
+            UIManager.Instance.AddScore(10); // Add points for a correct match
+
+            CheckLevelCompletion();
+        }
+        else
+        {
+            // No match, flip cards back
+            firstFlippedCard.GetComponent<CardAnim>().FlipBack();
+            secondFlippedCard.GetComponent<CardAnim>().FlipBack();
         }
 
-        if (isMatched)
+        // Reset flipped cards
+        firstFlippedCard = null;
+        secondFlippedCard = null;
+    }
+
+    private void CheckLevelCompletion()
+    {
+        if (UIManager.Instance.CurrentScore >= 60)
         {
             CollectablesManager.instance.OnLevelUp();
+            UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
         }
     }
 }
