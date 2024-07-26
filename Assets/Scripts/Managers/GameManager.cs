@@ -113,8 +113,25 @@ public class GameManager : MonoBehaviour
         {
             CollectablesManager.instance.OnLevelUp();
             UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
-            RestartGame(); // Restart the game when level is completed
         }
+
+        if (AllCardsMatched())
+        {
+            RestartGame();
+        }
+    }
+
+    private bool AllCardsMatched()
+    {
+        foreach (Transform child in gridTransform)
+        {
+            Card card = child.GetComponent<Card>();
+            if (!card.IsMatched)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void PlayBackgroundMusic()
