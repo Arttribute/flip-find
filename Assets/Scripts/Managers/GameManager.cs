@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
     public Transform fullImageTransform; // Reference to the UI element to show full image
     public Image fullImageDisplay; // Image component to display the full image
     public Sprite[] cardImages;
+    public AudioClip backgroundMusic; // Reference to the background music AudioClip
+    public AudioClip flipSound; // Reference to the card flip sound AudioClip
+
+    private AudioSource audioSource; // AudioSource component to play the background music and sounds
     private Timer timer;
     private Card firstFlippedCard;
     private Card secondFlippedCard;
@@ -18,12 +22,14 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     void Start()
     {
         GenerateCards();
         timer.ResetTimer();
+        PlayBackgroundMusic();
     }
 
     void GenerateCards()
@@ -56,6 +62,9 @@ public class GameManager : MonoBehaviour
 
     public void OnCardFlipped(Card card)
     {
+        // Play flip sound
+        PlayFlipSound();
+
         if (firstFlippedCard == null)
         {
             firstFlippedCard = card;
@@ -104,6 +113,38 @@ public class GameManager : MonoBehaviour
         {
             CollectablesManager.instance.OnLevelUp();
             UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
+            RestartGame(); // Restart the game when level is completed
         }
+    }
+
+    private void PlayBackgroundMusic()
+    {
+        if (backgroundMusic != null)
+        {
+            audioSource.clip = backgroundMusic;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+    }
+
+    private void PlayFlipSound()
+    {
+        if (flipSound != null)
+        {
+            audioSource.PlayOneShot(flipSound);
+        }
+    }
+
+    private void RestartGame()
+    {
+        // Clear existing cards
+        foreach (Transform child in gridTransform)
+        {
+            Destroy(child.gameObject);
+        }
+        // Generate new cards
+        GenerateCards();
+        // Reset timer
+        timer.ResetTimer();
     }
 }

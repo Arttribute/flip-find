@@ -12,7 +12,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button pauseButton; // Reference to the pause button
     [SerializeField] private Button resumeButton; // Reference to the resume button
     [SerializeField] private MenuAnim menuAnim; // Reference to the MenuAnim script
+    [SerializeField] private AudioClip buttonClickSound; // Reference to the button click sound AudioClip
 
+    private AudioSource audioSource; // AudioSource component to play the sounds
     private int _currentScore;
 
     public int CurrentScore => _currentScore; // Property to access current score
@@ -26,6 +28,7 @@ public class UIManager : MonoBehaviour
         else
         {
             Instance = this;
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
         DontDestroyOnLoad(gameObject);
     }
@@ -35,8 +38,8 @@ public class UIManager : MonoBehaviour
         ResetScore(); // Initialize the score at the start
 
         // Add listeners to the pause and resume buttons
-        pauseButton.onClick.AddListener(TogglePauseMenu);
-        resumeButton.onClick.AddListener(TogglePauseMenu);
+        pauseButton.onClick.AddListener(() => OnButtonClick(TogglePauseMenu));
+        resumeButton.onClick.AddListener(() => OnButtonClick(TogglePauseMenu));
 
         // Initially hide the pause menu panel
         pauseMenuPanel.SetActive(true);
@@ -75,6 +78,20 @@ public class UIManager : MonoBehaviour
         else
         {
             Time.timeScale = 0f; // Pause the game
+        }
+    }
+
+    private void OnButtonClick(System.Action action)
+    {
+        PlayButtonClickSound();
+        action.Invoke();
+    }
+
+    private void PlayButtonClickSound()
+    {
+        if (buttonClickSound != null)
+        {
+            audioSource.PlayOneShot(buttonClickSound);
         }
     }
 }
