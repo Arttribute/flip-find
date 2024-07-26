@@ -66,6 +66,14 @@ public class CollectablesManager : MonoBehaviour
     {
         scoreMessage.text = "+10";
         scoreMessage.gameObject.SetActive(true);
+
+        // Animate the score message from left to right
+        Vector3 startPosition = new Vector3(-Screen.width, scoreMessage.rectTransform.anchoredPosition.y, 0);
+        Vector3 endPosition = new Vector3(0, scoreMessage.rectTransform.anchoredPosition.y, 0);
+
+        scoreMessage.rectTransform.anchoredPosition = startPosition;
+        scoreMessage.rectTransform.DOAnchorPos(endPosition, 1.0f).SetEase(Ease.OutCubic);
+
         Invoke("HideScoreMessage", 1.0f); // Hide the message after 1 second
     }
 
