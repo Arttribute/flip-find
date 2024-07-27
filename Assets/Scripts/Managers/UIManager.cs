@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
@@ -13,7 +12,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button pauseButton; // Reference to the pause button
     [SerializeField] private Button resumeButton; // Reference to the resume button
     [SerializeField] private MenuAnim menuAnim; // Reference to the MenuAnim script
+    [SerializeField] private AudioClip buttonClickSound; // Reference to the button click sound AudioClip
 
+    private AudioSource audioSource; // AudioSource component to play the sounds
     private int _currentScore;
 
     public int CurrentScore => _currentScore; // Property to access current score
@@ -27,6 +28,7 @@ public class UIManager : MonoBehaviour
         else
         {
             Instance = this;
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
         DontDestroyOnLoad(gameObject);
     }
@@ -36,11 +38,11 @@ public class UIManager : MonoBehaviour
         ResetScore(); // Initialize the score at the start
 
         // Add listeners to the pause and resume buttons
-        pauseButton.onClick.AddListener(PauseGame);
-        resumeButton.onClick.AddListener(ResumeGame);
+        pauseButton.onClick.AddListener(() => OnButtonClick(TogglePauseMenu));
+        resumeButton.onClick.AddListener(() => OnButtonClick(TogglePauseMenu));
 
         // Initially hide the pause menu panel
-        pauseMenuPanel.SetActive(false);
+        pauseMenuPanel.SetActive(true);
     }
 
     public void AddScore(int points)
@@ -60,15 +62,36 @@ public class UIManager : MonoBehaviour
         _currentScoreText.text = "SCORE: " + _currentScore.ToString();
     }
 
-    private void PauseGame()
+    private void TogglePauseMenu()
     {
-        menuAnim.ShowMenu(); // Show the menu with animation
-        Time.timeScale = 0f; // Pause the game
+        menuAnim.ToggleMenu(); // Show/hide the menu with animation
+        StartCoroutine(PauseGameCoroutine());
     }
 
-    private void ResumeGame()
+    private IEnumerator PauseGameCoroutine()
     {
-        menuAnim.HideMenu(); // Hide the menu with animation
-        Time.timeScale = 1f; // Resume the game
+        yield return new WaitForSecondsRealtime(menuAnim.GetAnimationDuration()); // Wait for the animation to complete
+        if (Time.timeScale == 0f)
+        {
+            Time.timeScale = 1f; // Resume the game
+        }
+        else
+        {
+            Time.timeScale = 0f; // Pause the game
+        }
+    }
+
+    private void OnButtonClick(System.Action action)
+    {
+        PlayButtonClickSound();
+        action.Invoke();
+    }
+
+    private void PlayButtonClickSound()
+    {
+        if (buttonClickSound != null)
+        {
+            audioSource.PlayOneShot(buttonClickSound);
+        }
     }
 }

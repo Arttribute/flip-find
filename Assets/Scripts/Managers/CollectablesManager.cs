@@ -13,7 +13,10 @@ public class CollectablesManager : MonoBehaviour
     public TextMeshProUGUI unlockMessageText; // Text component for the unlock message
     public Sprite[] cardFaces; // Array of card faces
     public TextMeshProUGUI scoreMessage; // Text component for the score message
+    public AudioClip unlockSound; // Reference to the unlock sound AudioClip
+    public AudioClip scoreSound; // Reference to the score sound AudioClip
 
+    private AudioSource audioSource; // AudioSource component to play the sounds
     private int currentLevel = 0;
 
     void Awake()
@@ -21,6 +24,7 @@ public class CollectablesManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
         else
         {
@@ -53,6 +57,7 @@ public class CollectablesManager : MonoBehaviour
     {
         unlockMessageText.text = "New card face unlocked!";
         unlockMessagePanel.SetActive(true);
+        PlayUnlockSound();
         AnimateCard();
         Invoke("HideUnlockMessage", 3.0f); // Hide the message after 3 seconds
     }
@@ -66,6 +71,15 @@ public class CollectablesManager : MonoBehaviour
     {
         scoreMessage.text = "+10";
         scoreMessage.gameObject.SetActive(true);
+
+        // Animate the score message from left to right
+        Vector3 startPosition = new Vector3(-Screen.width, scoreMessage.rectTransform.anchoredPosition.y, 0);
+        Vector3 endPosition = new Vector3(0, scoreMessage.rectTransform.anchoredPosition.y, 0);
+
+        scoreMessage.rectTransform.anchoredPosition = startPosition;
+        scoreMessage.rectTransform.DOAnchorPos(endPosition, 1.0f).SetEase(Ease.OutCubic);
+
+        PlayScoreSound();
         Invoke("HideScoreMessage", 1.0f); // Hide the message after 1 second
     }
 
@@ -82,5 +96,21 @@ public class CollectablesManager : MonoBehaviour
 
         cardImage.rectTransform.anchoredPosition = startPosition;
         cardImage.rectTransform.DOAnchorPos(endPosition, 1.0f).SetEase(Ease.Linear);
+    }
+
+    private void PlayUnlockSound()
+    {
+        if (unlockSound != null)
+        {
+            audioSource.PlayOneShot(unlockSound);
+        }
+    }
+
+    private void PlayScoreSound()
+    {
+        if (scoreSound != null)
+        {
+            audioSource.PlayOneShot(scoreSound);
+        }
     }
 }
