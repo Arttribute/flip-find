@@ -7,8 +7,8 @@ public class MenuAnim : MonoBehaviour
 {
     [SerializeField] private RectTransform menuTransform;
     [SerializeField] private float animationDuration = 0.5f;
-    [SerializeField] private Vector2 hiddenPosition = new Vector2(-Screen.width, 0); // Initially off-screen to the left
-    [SerializeField] private Vector2 shownPosition = new Vector2(0, 0); // Centered position
+    [SerializeField] private Vector2 hiddenPosition = new Vector2(-500f, 0); // Example hidden position
+    [SerializeField] private Vector2 shownPosition = new Vector2(0, 0); // Example shown position
 
     private bool isMenuShown = false;
 
@@ -39,5 +39,10 @@ public class MenuAnim : MonoBehaviour
     public void HideMenu()
     {
         menuTransform.DOAnchorPos(hiddenPosition, animationDuration).SetEase(Ease.InCubic);
+    }
+
+    public float GetAnimationDuration()
+    {
+        return animationDuration;
     }
 }
