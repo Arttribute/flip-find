@@ -48,14 +48,10 @@ public class PlayFabManager : MonoBehaviour
 #endif
     }
 
-    private void OnLoginSuccess(LoginResult result)
-    {
-        Debug.Log("Congratulations, you made your first successful API call!");
-    }
-
     private void OnLoginMobileSuccess(LoginResult result)
     {
         Debug.Log("Login successful!");
+        LoadingScreen.instance.HideLoadingSpinner();
         // CheckTutorialStatus();
         if (result.NewlyCreated)
         {
@@ -66,13 +62,6 @@ public class PlayFabManager : MonoBehaviour
             UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
         }
 
-    }
-
-    private void OnLoginFailure(PlayFabError error)
-    {
-        Debug.LogWarning("Something went wrong with your first API call.  :(");
-        Debug.LogError("Here's some debug information:");
-        Debug.LogError(error.GenerateErrorReport());
     }
 
     private void OnLoginMobileFailure(PlayFabError error)
