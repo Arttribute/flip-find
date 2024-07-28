@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class CardAnim : MonoBehaviour
 {
@@ -22,7 +23,16 @@ public class CardAnim : MonoBehaviour
             transform.DOScaleX(1, 0.2f).OnComplete(() =>
             {
                 isAnimating = false;
-                GameManager.Instance.OnCardFlipped(card);
+                if (SceneManager.GetActiveScene().name == "MainScene")
+                {
+                    GameManager.Instance.OnCardFlipped(card);
+                }
+                else
+                {
+                    TutorialManager.instance.OnCardFlipped(card);
+                }
+
+
             });
         });
     }
