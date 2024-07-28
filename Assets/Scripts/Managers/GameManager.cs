@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -21,9 +22,18 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
         audioSource = gameObject.AddComponent<AudioSource>();
     }
+
 
     void Start()
     {
@@ -32,10 +42,10 @@ public class GameManager : MonoBehaviour
         PlayBackgroundMusic();
     }
 
-    void GenerateCards()
+    public void GenerateCards()
     {
         List<Sprite> images = new List<Sprite>(cardImages);
-        images.AddRange(cardImages); // Duplicate images for pairs
+        //images.AddRange(cardImages); // Duplicate images for pairs
         images = ShuffleList(images);
 
         foreach (Sprite image in images)
