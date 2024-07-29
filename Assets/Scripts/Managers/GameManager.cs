@@ -38,14 +38,14 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         GenerateCards();
-        timer.ResetTimer();
+        //timer.ResetTimer();
         PlayBackgroundMusic();
     }
 
     public void GenerateCards()
     {
         List<Sprite> images = new List<Sprite>(cardImages);
-        //images.AddRange(cardImages); // Duplicate images for pairs
+        images.AddRange(cardImages); // Duplicate images for pairs
         images = ShuffleList(images);
 
         foreach (Sprite image in images)
