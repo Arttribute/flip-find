@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using DG.Tweening; // Add this for DoTween
 
 public class TutorialManager : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class TutorialManager : MonoBehaviour
     [SerializeField] private GameObject tutorialPointer;
     [SerializeField] private GameObject tutorialMessage;
 
+    [SerializeField] private GameObject pauseMenu; // Reference to the pause menu
+    [SerializeField] private Button pauseButton; // Reference to the pause button
+    [SerializeField] private Button backButton; // Reference to the back button
+
     private Timer timer;
     private Card firstFlippedCard;
     private Card secondFlippedCard;
@@ -26,6 +31,11 @@ public class TutorialManager : MonoBehaviour
 
     private Card card;
 
+    [SerializeField] private AudioClip backgroundMusic; // Reference to the background music AudioClip
+    [SerializeField] private AudioClip flipSound; // Reference to the card flip sound AudioClip
+    private AudioSource audioSource; // AudioSource component to play the background music
+
+    private bool isPaused = false; // To track the pause state
 
     void Awake()
     {
@@ -39,22 +49,31 @@ public class TutorialManager : MonoBehaviour
             Destroy(gameObject);
         }
 
+        audioSource = gameObject.AddComponent<AudioSource>();
+
+        pauseButton.onClick.AddListener(OnPauseButtonClicked);
+        backButton.onClick.AddListener(OnBackButtonClicked);
     }
 
     void Start()
     {
-
-
         tutorialPointer.SetActive(true);
         tutorialMessage.SetActive(true);
         tutorialText.text = "Flip the indicated card";
         GenerateCards();
         timer.ResetTimer();
+        PlayBackgroundMusic();
+
+        // Initially hide the pause menu
+        pauseMenu.SetActive(false);
     }
 
     void Update()
     {
-        OnCardFlip();
+        if (!isPaused)
+        {
+            OnCardFlip();
+        }
     }
 
     public void GenerateCards()
@@ -96,6 +115,7 @@ public class TutorialManager : MonoBehaviour
             secondFlippedCard = card;
             StartCoroutine(CheckForMatch());
         }
+        PlayFlipSound();
     }
 
     private IEnumerator CheckForMatch()
@@ -129,7 +149,6 @@ public class TutorialManager : MonoBehaviour
         secondFlippedCard = null;
     }
 
-
     private void OnCardFlip()
     {
         Card[] allCards = FindObjectsOfType<Card>();
@@ -146,10 +165,8 @@ public class TutorialManager : MonoBehaviour
                     tutorialText.text = "Tutorial Complete! Flip all cards";
                     break;
                 }
-
             }
         }
-
     }
 
     private void CheckTutorialCompletion()
@@ -158,6 +175,24 @@ public class TutorialManager : MonoBehaviour
         {
             OnTutorialComplete();
         }
+
+        if (AllCardsMatched())
+        {
+            RestartGame();
+        }
+    }
+
+    private bool AllCardsMatched()
+    {
+        foreach (Transform child in gridTransform)
+        {
+            Card card = child.GetComponent<Card>();
+            if (!card.IsMatched)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
     public void StartTutorial()
@@ -171,5 +206,72 @@ public class TutorialManager : MonoBehaviour
         isTutorialCompleted = true;
         //PlayFabManager.Instance.MarkTutorialAsCompleted();
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+    }
+
+    private void PlayBackgroundMusic()
+    {
+        if (backgroundMusic != null)
+        {
+            audioSource.clip = backgroundMusic;
+            audioSource.loop = true;
+            audioSource.Play();
+        }
+    }
+
+    private void PlayFlipSound()
+    {
+        if (flipSound != null)
+        {
+            audioSource.PlayOneShot(flipSound);
+        }
+    }
+
+    private void OnPauseButtonClicked()
+    {
+        if (!isPaused)
+        {
+            isPaused = true;
+            StartCoroutine(PauseGameCoroutine());
+        }
+    }
+
+    private void OnBackButtonClicked()
+    {
+        if (isPaused)
+        {
+            StartCoroutine(ResumeGameCoroutine());
+        }
+    }
+
+    private IEnumerator PauseGameCoroutine()
+    {
+        // Animate the menu from left to right
+        pauseMenu.SetActive(true);
+        pauseMenu.transform.DOMoveX(Screen.width / 2, 0.5f).SetEase(Ease.OutQuad);
+        yield return new WaitForSecondsRealtime(0.5f); // Wait for the animation to complete
+        Time.timeScale = 0f; // Pause the game
+    }
+
+    private IEnumerator ResumeGameCoroutine()
+    {
+        // Animate the menu from right to left
+        pauseMenu.transform.DOMoveX(-Screen.width / 2, 0.5f).SetEase(Ease.OutQuad);
+        yield return new WaitForSecondsRealtime(0.5f); // Wait for the animation to complete
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1f; // Resume the game
+        isPaused = false;
+    }
+
+    private void RestartGame()
+    {
+        // Clear existing cards
+        foreach (Transform child in gridTransform)
+        {
+            Destroy(child.gameObject);
+        }
+        // Generate new cards
+        GenerateCards();
+        // Reset timer
+        timer.ResetTimer();
     }
 }
