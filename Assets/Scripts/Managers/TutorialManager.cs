@@ -115,7 +115,7 @@ public class TutorialManager : MonoBehaviour
             // Update score
             UIManager.Instance.AddScore(10); // Add points for a correct match
 
-            //CheckLevelCompletion();
+            CheckTutorialCompletion();
         }
         else
         {
@@ -152,15 +152,24 @@ public class TutorialManager : MonoBehaviour
 
     }
 
+    private void CheckTutorialCompletion()
+    {
+        if (UIManager.Instance.CurrentScore >= 60)
+        {
+            OnTutorialComplete();
+        }
+    }
+
     public void StartTutorial()
     {
         isTutorialCompleted = false;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Tutorial");
     }
 
     private void OnTutorialComplete()
     {
         isTutorialCompleted = true;
-        PlayFabManager.Instance.MarkTutorialAsCompleted();
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
+        //PlayFabManager.Instance.MarkTutorialAsCompleted();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
     }
 }
