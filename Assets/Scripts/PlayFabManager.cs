@@ -52,7 +52,7 @@ public class PlayFabManager : MonoBehaviour
     {
         Debug.Log("Login successful!");
         LoadingScreen.instance.HideLoadingSpinner();
-        // CheckTutorialStatus();
+
         if (result.NewlyCreated)
         {
             TutorialManager.instance.StartTutorial();
@@ -68,65 +68,6 @@ public class PlayFabManager : MonoBehaviour
     {
         Debug.Log(error.GenerateErrorReport());
     }
-
-    private void CheckTutorialStatus()
-    {
-        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnDataReceived, OnError);
-    }
-
-    private void OnDataReceived(GetUserDataResult result)
-    {
-        if (result.Data != null && result.Data.ContainsKey("TutorialCompleted"))
-        {
-            if (result.Data["TutorialCompleted"].Value == "true")
-            {
-                LoadMainScene();
-            }
-            else
-            {
-                LoadTutorial();
-            }
-        }
-        else
-        {
-            LoadTutorial();
-        }
-    }
-
-    private void OnError(PlayFabError error)
-    {
-        Debug.LogError("Error retrieving user data: " + error.GenerateErrorReport());
-    }
-
-    private void LoadTutorial()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Tutorial");
-
-    }
-
-    private void LoadMainScene()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
-    }
-
-    public void MarkTutorialAsCompleted()
-    {
-        var request = new UpdateUserDataRequest
-        {
-            Data = new Dictionary<string, string>
-            {
-                { "TutorialCompleted", "true" },
-            }
-        };
-
-        PlayFabClientAPI.UpdateUserData(request, OnDataSend, OnError);
-    }
-
-    private void OnDataSend(UpdateUserDataResult result)
-    {
-        Debug.Log("Tutorial completion status saved.");
-    }
-
 
 
     public static string ReturnMobileID()

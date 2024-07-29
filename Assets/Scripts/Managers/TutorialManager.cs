@@ -204,7 +204,6 @@ public class TutorialManager : MonoBehaviour
     private void OnTutorialComplete()
     {
         isTutorialCompleted = true;
-        //PlayFabManager.Instance.MarkTutorialAsCompleted();
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
     }
 
