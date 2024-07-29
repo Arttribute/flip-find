@@ -55,7 +55,7 @@ public class PlayFabManager : MonoBehaviour
 
         if (result.NewlyCreated)
         {
-            TutorialManager.instance.StartTutorial();
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Tutorial");
         }
         else
         {

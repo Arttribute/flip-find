@@ -76,6 +76,11 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
     public void GenerateCards()
     {
         List<Sprite> images = new List<Sprite>(cardImages);
@@ -197,13 +202,13 @@ public class TutorialManager : MonoBehaviour
 
     public void StartTutorial()
     {
-        isTutorialCompleted = false;
+        //isTutorialCompleted = false;
         UnityEngine.SceneManagement.SceneManager.LoadScene("Tutorial");
     }
 
     private void OnTutorialComplete()
     {
-        isTutorialCompleted = true;
+        //isTutorialCompleted = true;
         UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
     }
 

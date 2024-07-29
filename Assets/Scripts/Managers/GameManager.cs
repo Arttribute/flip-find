@@ -42,6 +42,11 @@ public class GameManager : MonoBehaviour
         PlayBackgroundMusic();
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
     public void GenerateCards()
     {
         List<Sprite> images = new List<Sprite>(cardImages);
