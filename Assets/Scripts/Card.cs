@@ -23,6 +23,11 @@ public class Card : MonoBehaviour
         cardFront = frontImage;
     }
 
+    public void SetCardBack(Sprite backImage)
+    {
+        cardBack = backImage;
+    }
+
     public void ShowCardFront()
     {
         if (!isMatched)
