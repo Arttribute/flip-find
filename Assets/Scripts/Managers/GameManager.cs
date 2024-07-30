@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviour
         audioSource = gameObject.AddComponent<AudioSource>();
     }
 
-
     void Start()
     {
         GenerateCards();
@@ -58,6 +57,7 @@ public class GameManager : MonoBehaviour
             GameObject cardObject = Instantiate(cardPrefab, gridTransform);
             Card card = cardObject.GetComponent<Card>();
             card.SetCardImage(image);
+            card.SetCardBack(CollectablesManager.instance.GetCurrentCardBack()); // Set the current card back
             CardAnim cardAnim = cardObject.GetComponent<CardAnim>();
             cardAnim.Init(card); // Initialize CardAnim with the Card reference
         }

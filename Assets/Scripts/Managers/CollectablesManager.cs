@@ -18,6 +18,7 @@ public class CollectablesManager : MonoBehaviour
 
     private AudioSource audioSource; // AudioSource component to play the sounds
     private int currentLevel = 0;
+    private Sprite currentCardBack; // To store the current card back
 
     void Awake()
     {
@@ -36,6 +37,7 @@ public class CollectablesManager : MonoBehaviour
     {
         LoadCardFace();
         HideScoreMessage();
+        currentCardBack = cardFaces[currentLevel]; // Set the initial card back
     }
 
     public void OnLevelUp()
@@ -44,6 +46,7 @@ public class CollectablesManager : MonoBehaviour
         if (currentLevel < cardFaces.Length)
         {
             LoadCardFace();
+            currentCardBack = cardFaces[currentLevel]; // Update the card back
             ShowUnlockMessage();
         }
     }
@@ -51,6 +54,11 @@ public class CollectablesManager : MonoBehaviour
     private void LoadCardFace()
     {
         cardImage.sprite = cardFaces[currentLevel];
+    }
+
+    public Sprite GetCurrentCardBack()
+    {
+        return currentCardBack;
     }
 
     private void ShowUnlockMessage()
