@@ -20,8 +20,6 @@ public class UIManager : MonoBehaviour
     private int _currentScore;
     private int _cardFaceScore;
 
-
-
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -46,7 +44,7 @@ public class UIManager : MonoBehaviour
         resumeButton.onClick.AddListener(() => OnButtonClick(TogglePauseMenu));
 
         // Initially hide the pause menu panel
-        pauseMenuPanel.SetActive(true);
+        pauseMenuPanel.SetActive(false);
     }
 
     public void AddScore(int points)
@@ -58,9 +56,9 @@ public class UIManager : MonoBehaviour
 
     public void ResetScore()
     {
-        //_currentScore = 0;
+        _currentScore = 0;
         _cardFaceScore = 0;
-        //UpdateCurrentScoreUI();
+        UpdateCurrentScoreUI();
     }
 
     private void UpdateCurrentScoreUI()
@@ -70,19 +68,22 @@ public class UIManager : MonoBehaviour
 
     private void TogglePauseMenu()
     {
-        menuAnim.ToggleMenu(); // Show/hide the menu with animation
         StartCoroutine(PauseGameCoroutine());
     }
 
     private IEnumerator PauseGameCoroutine()
     {
-        yield return new WaitForSecondsRealtime(menuAnim.GetAnimationDuration()); // Wait for the animation to complete
         if (Time.timeScale == 0f)
         {
+            menuAnim.HideMenu(); // Hide the menu with animation
+            yield return new WaitForSecondsRealtime(menuAnim.GetHideAnimationDuration()); // Wait for the hide animation to complete
             Time.timeScale = 1f; // Resume the game
         }
         else
         {
+            pauseMenuPanel.SetActive(true);
+            menuAnim.ShowMenu(); // Show the menu with animation
+            yield return new WaitForSecondsRealtime(menuAnim.GetShowAnimationDuration()); // Wait for the show animation to complete
             Time.timeScale = 0f; // Pause the game
         }
     }
