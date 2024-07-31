@@ -18,7 +18,7 @@ public class CollectablesManager : MonoBehaviour
 
     private AudioSource audioSource; // AudioSource component to play the sounds
     private int currentLevel = 0;
-    private Sprite currentCardBack; // To store the current card back
+    private Sprite currentCardBack = null; // To store the current card back
 
     void Awake()
     {
@@ -37,7 +37,7 @@ public class CollectablesManager : MonoBehaviour
     {
         LoadCardFace();
         HideScoreMessage();
-        currentCardBack = cardFaces[currentLevel]; // Set the initial card back
+        // currentCardBack = cardFaces[currentLevel]; // Do not set the card back initially
     }
 
     public void OnLevelUp()

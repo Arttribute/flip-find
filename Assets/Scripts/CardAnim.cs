@@ -14,6 +14,12 @@ public class CardAnim : MonoBehaviour
 
     public void Flip()
     {
+
+         if (card == null)
+        {
+            Debug.LogError("Card reference is missing in CardAnim.");
+            return;
+        }
         if (isAnimating || card.IsMatched) return;
 
         isAnimating = true;

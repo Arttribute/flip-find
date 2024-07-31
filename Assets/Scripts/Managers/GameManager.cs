@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-
     public bool IsCheckingForMatch => isCheckingForMatch; // Public property to access isCheckingForMatch
 
     public GameObject cardPrefab;
@@ -24,7 +23,7 @@ public class GameManager : MonoBehaviour
     private Card secondFlippedCard;
     private bool isCheckingForMatch = false; // Flag to prevent additional flips while checking for match
 
-
+    private Sprite defaultCardBack; // Store the default card back
 
     private void Awake()
     {
@@ -42,8 +41,8 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        defaultCardBack = cardPrefab.GetComponent<Card>().cardBack; // Set the default card back
         GenerateCards();
-        //timer.ResetTimer();
         PlayBackgroundMusic();
     }
 
@@ -63,7 +62,8 @@ public class GameManager : MonoBehaviour
             GameObject cardObject = Instantiate(cardPrefab, gridTransform);
             Card card = cardObject.GetComponent<Card>();
             card.SetCardImage(image);
-            card.SetCardBack(CollectablesManager.instance.GetCurrentCardBack()); // Set the current card back
+            Sprite currentCardBack = CollectablesManager.instance.GetCurrentCardBack();
+            card.SetCardBack(currentCardBack != null ? currentCardBack : defaultCardBack); // Set card back
             CardAnim cardAnim = cardObject.GetComponent<CardAnim>();
             cardAnim.Init(card); // Initialize CardAnim with the Card reference
         }
@@ -170,7 +170,5 @@ public class GameManager : MonoBehaviour
         }
         // Generate new cards
         GenerateCards();
-        // Reset timer
-        //timer.ResetTimer();
     }
 }
