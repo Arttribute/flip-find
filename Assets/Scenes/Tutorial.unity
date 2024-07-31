@@ -623,6 +623,10 @@ PrefabInstance:
       propertyPath: scoreMessage
       value: 
       objectReference: {fileID: 125701001}
+    - target: {fileID: 7334297905874563470, guid: 5d77106454d398943857c837810fb13b, type: 3}
+      propertyPath: cardFaces.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: 5b35a2b6eb0d5ae41beacb83d556d71b, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -921,19 +925,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 581509782050976776, guid: d740a13ec05adad4b9052fecb2da6ee7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 581509782050976776, guid: d740a13ec05adad4b9052fecb2da6ee7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 581509782050976776, guid: d740a13ec05adad4b9052fecb2da6ee7, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 850564191}
+    - target: {fileID: 581509782050976776, guid: d740a13ec05adad4b9052fecb2da6ee7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 581509782050976776, guid: d740a13ec05adad4b9052fecb2da6ee7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: 
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 581509782050976776, guid: d740a13ec05adad4b9052fecb2da6ee7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -941,7 +949,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 581509782050976776, guid: d740a13ec05adad4b9052fecb2da6ee7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_BoolArgument
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 581509782050976776, guid: d740a13ec05adad4b9052fecb2da6ee7, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
@@ -1041,8 +1049,8 @@ MonoBehaviour:
   fullImageDisplay: {fileID: 465542763}
   cardImages:
   - {fileID: 21300000, guid: 3a7ab508fe2203c45bacd47727a43409, type: 3}
-  - {fileID: 21300000, guid: 5b35a2b6eb0d5ae41beacb83d556d71b, type: 3}
-  - {fileID: 21300000, guid: 024c7b55186fa534b847b0c224ec8ad2, type: 3}
+  - {fileID: 21300000, guid: 20ba830adad29b141a80c4e049e3101b, type: 3}
+  - {fileID: 21300000, guid: 79e31dbc35358bf479560e8221df2522, type: 3}
   - {fileID: 21300000, guid: a9cb4b9d665e89c45b25258c2798109e, type: 3}
   - {fileID: 21300000, guid: abe38e60a2d1e2243bed76992549e07c, type: 3}
   - {fileID: 21300000, guid: 3455e350e67bdf740987daba8531292e, type: 3}
@@ -1558,6 +1566,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3664201047732164951, guid: 7ef2097baad3f264d8fb690b5543d7da, type: 3}
       propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5496710320305512565, guid: 7ef2097baad3f264d8fb690b5543d7da, type: 3}
+      propertyPath: m_Interactable
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5989086511455445648, guid: 7ef2097baad3f264d8fb690b5543d7da, type: 3}
