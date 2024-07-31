@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Card : MonoBehaviour
@@ -15,7 +16,7 @@ public class Card : MonoBehaviour
     {
         image = GetComponent<Image>();
         ShowCardBack();
-        GetComponent<Button>().onClick.AddListener(OnCardClicked);
+        GetComponent<Button>().onClick.AddListener(OnGameCardClicked);
     }
 
     public void SetCardImage(Sprite frontImage)
@@ -46,13 +47,25 @@ public class Card : MonoBehaviour
         }
     }
 
-    public void OnCardClicked()
+    public void OnGameCardClicked()
     {
-        if (!isFlipped && !isMatched && !GameManager.Instance.IsCheckingForMatch) // Check if match check is in progress
+        if (SceneManager.GetActiveScene().name == "Tutorial")
         {
-            GetComponent<CardAnim>().Flip();
+            if (!isFlipped && !isMatched && !TutorialManager.instance.IsCheckingForMatch) // Check if match check is in progress
+            {
+                GetComponent<CardAnim>().Flip();
+            }
         }
+        else if (SceneManager.GetActiveScene().name == "MainScene")
+        {
+            if (!isFlipped && !isMatched && !GameManager.Instance.IsCheckingForMatch) // Check if match check is in progress
+            {
+                GetComponent<CardAnim>().Flip();
+            }
+        }
+
     }
+
 
     public void SetMatched()
     {
