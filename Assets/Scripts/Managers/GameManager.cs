@@ -19,6 +19,10 @@ public class GameManager : MonoBehaviour
     private Timer timer;
     private Card firstFlippedCard;
     private Card secondFlippedCard;
+    private bool isCheckingForMatch = false; // Flag to prevent additional flips while checking for match
+
+    // Public property to access isCheckingForMatch
+    public bool IsCheckingForMatch => isCheckingForMatch;
 
     private void Awake()
     {
@@ -77,6 +81,9 @@ public class GameManager : MonoBehaviour
 
     public void OnCardFlipped(Card card)
     {
+        if (isCheckingForMatch)
+            return; // Prevent flipping if a match check is in progress
+
         // Play flip sound
         PlayFlipSound();
 
@@ -87,6 +94,7 @@ public class GameManager : MonoBehaviour
         else if (secondFlippedCard == null)
         {
             secondFlippedCard = card;
+            isCheckingForMatch = true; // Set flag to indicate match check is in progress
             StartCoroutine(CheckForMatch());
         }
     }
@@ -120,6 +128,7 @@ public class GameManager : MonoBehaviour
         // Reset flipped cards
         firstFlippedCard = null;
         secondFlippedCard = null;
+        isCheckingForMatch = false; // Clear flag after match check is complete
     }
 
     private void CheckLevelCompletion()

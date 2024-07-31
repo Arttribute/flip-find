@@ -48,7 +48,7 @@ public class Card : MonoBehaviour
 
     public void OnCardClicked()
     {
-        if (!isFlipped && !isMatched)
+        if (!isFlipped && !isMatched && !GameManager.Instance.IsCheckingForMatch) // Check if match check is in progress
         {
             GetComponent<CardAnim>().Flip();
         }

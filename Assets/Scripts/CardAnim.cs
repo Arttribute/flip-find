@@ -17,10 +17,10 @@ public class CardAnim : MonoBehaviour
         if (isAnimating || card.IsMatched) return;
 
         isAnimating = true;
-        transform.DOScaleX(0, 0.2f).OnComplete(() =>
+        transform.DOScaleX(0, 0.1f).OnComplete(() =>
         {
             card.ShowCardFront();
-            transform.DOScaleX(1, 0.2f).OnComplete(() =>
+            transform.DOScaleX(1, 0.1f).OnComplete(() =>
             {
                 isAnimating = false;
                 if (SceneManager.GetActiveScene().name == "MainScene")
@@ -42,10 +42,10 @@ public class CardAnim : MonoBehaviour
         if (isAnimating || card.IsMatched) return;
 
         isAnimating = true;
-        transform.DOScaleX(0, 0.2f).OnComplete(() =>
+        transform.DOScaleX(0, 0.1f).OnComplete(() =>
         {
             card.ShowCardBack();
-            transform.DOScaleX(1, 0.2f).OnComplete(() =>
+            transform.DOScaleX(1, 0.1f).OnComplete(() =>
             {
                 isAnimating = false;
             });
