@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    public bool IsCheckingForMatch => isCheckingForMatch; // Public property to access isCheckingForMatch
+
     public GameObject cardPrefab;
     public Transform gridTransform;
     public Transform fullImageTransform; // Reference to the UI element to show full image
@@ -21,8 +24,7 @@ public class GameManager : MonoBehaviour
     private Card secondFlippedCard;
     private bool isCheckingForMatch = false; // Flag to prevent additional flips while checking for match
 
-    // Public property to access isCheckingForMatch
-    public bool IsCheckingForMatch => isCheckingForMatch;
+
 
     private void Awake()
     {
