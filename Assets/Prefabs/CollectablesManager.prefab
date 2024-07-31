@@ -52,6 +52,15 @@ MonoBehaviour:
   cardFaces:
   - {fileID: 21300000, guid: 024c7b55186fa534b847b0c224ec8ad2, type: 3}
   - {fileID: 21300000, guid: bddcebad8c226734c83645dd30c4fd19, type: 3}
+  - {fileID: 21300000, guid: 58f0c17a07f7f7d428f11f3eaa3f8c3f, type: 3}
+  - {fileID: 21300000, guid: 5b35a2b6eb0d5ae41beacb83d556d71b, type: 3}
+  - {fileID: 21300000, guid: 07aec6c9298d67c448177aefa9791dfa, type: 3}
+  - {fileID: 21300000, guid: cb9bd63f8b6b9aa46a5dbb7c7442e6d0, type: 3}
+  - {fileID: 21300000, guid: e19f6e6b694125b4fabe713faa09086a, type: 3}
+  - {fileID: 21300000, guid: c9f6f85c86c1cff4a98188bb41e88765, type: 3}
+  - {fileID: 21300000, guid: 0c72f7729a0bab047ba2604d2e03b304, type: 3}
+  - {fileID: 21300000, guid: f4ba94e7a39d56347aa04dc5cabbb076, type: 3}
+  - {fileID: 21300000, guid: 0e954c7db6217c54cb3f80f000ac1d32, type: 3}
   scoreMessage: {fileID: 0}
   unlockSound: {fileID: 8300000, guid: 0a4293a238ba4c145bee8654820e00bf, type: 3}
   scoreSound: {fileID: 8300000, guid: 3df4c15fc67f7c142b98d759066494b1, type: 3}
