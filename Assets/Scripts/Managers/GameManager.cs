@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckLevelCompletion()
     {
-        if (UIManager.Instance.CurrentScore >= 60)
+        if (UIManager.Instance.CardFaceScore >= 60)
         {
             CollectablesManager.instance.OnLevelUp();
             UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
@@ -160,6 +160,6 @@ public class GameManager : MonoBehaviour
         // Generate new cards
         GenerateCards();
         // Reset timer
-        timer.ResetTimer();
+        //timer.ResetTimer();
     }
 }

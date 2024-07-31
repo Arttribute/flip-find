@@ -6,6 +6,8 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
+    public int CurrentScore => _currentScore; // Property to access current score
+    public int CardFaceScore => _cardFaceScore;
 
     [SerializeField] private TextMeshProUGUI _currentScoreText;
     [SerializeField] private GameObject pauseMenuPanel; // Reference to the pause menu panel
@@ -16,8 +18,9 @@ public class UIManager : MonoBehaviour
 
     private AudioSource audioSource; // AudioSource component to play the sounds
     private int _currentScore;
+    private int _cardFaceScore;
 
-    public int CurrentScore => _currentScore; // Property to access current score
+
 
     void Awake()
     {
@@ -35,6 +38,7 @@ public class UIManager : MonoBehaviour
 
     void Start()
     {
+        _currentScore = 0;
         ResetScore(); // Initialize the score at the start
 
         // Add listeners to the pause and resume buttons
@@ -48,13 +52,15 @@ public class UIManager : MonoBehaviour
     public void AddScore(int points)
     {
         _currentScore += points;
+        _cardFaceScore += points;
         UpdateCurrentScoreUI();
     }
 
     public void ResetScore()
     {
-        _currentScore = 0;
-        UpdateCurrentScoreUI();
+        //_currentScore = 0;
+        _cardFaceScore = 0;
+        //UpdateCurrentScoreUI();
     }
 
     private void UpdateCurrentScoreUI()
