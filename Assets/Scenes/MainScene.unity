@@ -1075,6 +1075,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1479541865}
   m_CullTransparentMesh: 1
+--- !u!1 &1518176086 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3708232517905282804, guid: b3bf4d216a1b84647869d6bc46be9b0a, type: 3}
+  m_PrefabInstance: {fileID: 1824285210348067718}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1651406105 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7028972159172125581, guid: b3bf4d216a1b84647869d6bc46be9b0a, type: 3}
@@ -2180,9 +2185,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 648268728}
     - target: {fileID: 7334297905874563470, guid: 5d77106454d398943857c837810fb13b, type: 3}
+      propertyPath: cardPrefab
+      value: 
+      objectReference: {fileID: 1518176086}
+    - target: {fileID: 7334297905874563470, guid: 5d77106454d398943857c837810fb13b, type: 3}
       propertyPath: scoreMessage
       value: 
       objectReference: {fileID: 970129715}
+    - target: {fileID: 7334297905874563470, guid: 5d77106454d398943857c837810fb13b, type: 3}
+      propertyPath: gridTransform
+      value: 
+      objectReference: {fileID: 332176816}
     - target: {fileID: 7334297905874563470, guid: 5d77106454d398943857c837810fb13b, type: 3}
       propertyPath: unlockMessageText
       value: 

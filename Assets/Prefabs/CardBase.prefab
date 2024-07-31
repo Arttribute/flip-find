@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardFront: {fileID: 21300000, guid: 20ba830adad29b141a80c4e049e3101b, type: 3}
-  cardBack: {fileID: 21300000, guid: 024c7b55186fa534b847b0c224ec8ad2, type: 3}
+  cardBack: {fileID: 21300000, guid: 58f0c17a07f7f7d428f11f3eaa3f8c3f, type: 3}
 --- !u!114 &3134666359689651491
 MonoBehaviour:
   m_ObjectHideFlags: 0

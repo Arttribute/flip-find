@@ -11,9 +11,17 @@ public class Card : MonoBehaviour
     private bool isFlipped = false;
     private bool isMatched = false;
 
+    private CardAnim cardAnim; // Reference to CardAnim component
+
     private void Start()
     {
         image = GetComponent<Image>();
+        cardAnim = GetComponent<CardAnim>(); // Get CardAnim component
+        if (cardAnim == null)
+        {
+            Debug.LogError("CardAnim component is missing from this GameObject.");
+        }
+
         ShowCardBack();
         GetComponent<Button>().onClick.AddListener(OnCardClicked);
     }
@@ -48,9 +56,9 @@ public class Card : MonoBehaviour
 
     public void OnCardClicked()
     {
-        if (!isFlipped && !isMatched && !GameManager.Instance.IsCheckingForMatch) // Check if match check is in progress
+        if (!isFlipped && !isMatched && cardAnim != null) // Check if cardAnim is not null
         {
-            GetComponent<CardAnim>().Flip();
+            cardAnim.Flip();
         }
     }
 
