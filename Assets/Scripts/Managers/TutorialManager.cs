@@ -9,6 +9,8 @@ public class TutorialManager : MonoBehaviour
 {
     public static TutorialManager instance;
 
+    public bool IsCheckingForMatch => _isCheckingForMatch;
+
     public GameObject cardPrefab;
     public Transform gridTransform;
     public Transform fullImageTransform; // Reference to the UI element to show full image
@@ -28,14 +30,12 @@ public class TutorialManager : MonoBehaviour
     private Card secondFlippedCard;
 
     [SerializeField] private bool isTutorialCompleted;
-
-    private Card card;
-
     [SerializeField] private AudioClip backgroundMusic; // Reference to the background music AudioClip
     [SerializeField] private AudioClip flipSound; // Reference to the card flip sound AudioClip
     private AudioSource audioSource; // AudioSource component to play the background music
 
     private bool isPaused = false; // To track the pause state
+    private bool _isCheckingForMatch = false;
 
     void Awake()
     {
@@ -61,7 +61,7 @@ public class TutorialManager : MonoBehaviour
         tutorialMessage.SetActive(true);
         tutorialText.text = "Flip the indicated card";
         GenerateCards();
-        timer.ResetTimer();
+        //timer.ResetTimer();
         PlayBackgroundMusic();
 
         // Initially hide the pause menu
@@ -111,6 +111,9 @@ public class TutorialManager : MonoBehaviour
 
     public void OnCardFlipped(Card card)
     {
+        if (_isCheckingForMatch)
+            return; // Prevent flipping if a match check is in progress
+
         if (firstFlippedCard == null)
         {
             firstFlippedCard = card;
@@ -118,6 +121,7 @@ public class TutorialManager : MonoBehaviour
         else if (secondFlippedCard == null)
         {
             secondFlippedCard = card;
+            _isCheckingForMatch = true;
             StartCoroutine(CheckForMatch());
         }
         PlayFlipSound();
@@ -152,6 +156,7 @@ public class TutorialManager : MonoBehaviour
         // Reset flipped cards
         firstFlippedCard = null;
         secondFlippedCard = null;
+        _isCheckingForMatch = false;
     }
 
     private void OnCardFlip()
