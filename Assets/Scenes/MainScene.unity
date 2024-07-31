@@ -1903,6 +1903,10 @@ PrefabInstance:
       propertyPath: fullImageTransform
       value: 
       objectReference: {fileID: 1049434573}
+    - target: {fileID: 5033523249239924292, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5437376058997827234, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -2097,6 +2101,10 @@ PrefabInstance:
     - target: {fileID: 5989086511455445648, guid: 7ef2097baad3f264d8fb690b5543d7da, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 8479601006151973875, guid: 7ef2097baad3f264d8fb690b5543d7da, type: 3}
+      propertyPath: animationDuration
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -6,7 +6,7 @@ using DG.Tweening;
 public class CollectibleAnim : MonoBehaviour
 {
     // Duration of the animation
-    public float duration = 2.0f;
+    public float duration = 0.5f;
     // Target position to move to
     public Vector3 targetPosition = new Vector3(5.0f, 0, 0);
     
