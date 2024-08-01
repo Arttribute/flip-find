@@ -56,7 +56,7 @@ public class UIManager : MonoBehaviour
 
     public void ResetScore()
     {
-        _currentScore = 0;
+        //_currentScore = 0;
         _cardFaceScore = 0;
         UpdateCurrentScoreUI();
     }
