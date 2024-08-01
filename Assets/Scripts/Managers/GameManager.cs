@@ -2,28 +2,30 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    public Sprite[] CurrentCardBatch => currentCardBatch;
     public bool IsCheckingForMatch => isCheckingForMatch; // Public property to access isCheckingForMatch
 
     public GameObject cardPrefab;
     public Transform gridTransform;
     public Transform fullImageTransform; // Reference to the UI element to show full image
     public Image fullImageDisplay; // Image component to display the full image
-    public Sprite[] cardImages;
     public AudioClip backgroundMusic; // Reference to the background music AudioClip
     public AudioClip flipSound; // Reference to the card flip sound AudioClip
+    public CardBatch[] cardBatches;
 
     private AudioSource audioSource; // AudioSource component to play the background music and sounds
-    private Timer timer;
+    private Sprite[] currentCardBatch;
+    private Sprite defaultCardBack; // Store the default card back
     private Card firstFlippedCard;
     private Card secondFlippedCard;
     private bool isCheckingForMatch = false; // Flag to prevent additional flips while checking for match
 
-    private Sprite defaultCardBack; // Store the default card back
+
 
     private void Awake()
     {
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         defaultCardBack = cardPrefab.GetComponent<Card>().cardBack; // Set the default card back
+        LoadCardBatch();
         GenerateCards();
         PlayBackgroundMusic();
     }
@@ -53,8 +56,8 @@ public class GameManager : MonoBehaviour
 
     public void GenerateCards()
     {
-        List<Sprite> images = new List<Sprite>(cardImages);
-        images.AddRange(cardImages); // Duplicate images for pairs
+        List<Sprite> images = new List<Sprite>(currentCardBatch);
+        images.AddRange(currentCardBatch); //Duplicate images for pairs
         images = ShuffleList(images);
 
         foreach (Sprite image in images)
@@ -67,6 +70,16 @@ public class GameManager : MonoBehaviour
             CardAnim cardAnim = cardObject.GetComponent<CardAnim>();
             cardAnim.Init(card); // Initialize CardAnim with the Card reference
         }
+    }
+
+    public void LoadCardBatch()
+    {
+        int level = CollectablesManager.instance.CurrentLevel;
+        if (level < cardBatches.Length)
+        {
+            currentCardBatch = cardBatches[level].cardFaces;
+        }
+
     }
 
     List<Sprite> ShuffleList(List<Sprite> list)
@@ -168,7 +181,8 @@ public class GameManager : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        // Generate new cards
+        // Load a new card batch and generate new cards
+        LoadCardBatch();
         GenerateCards();
     }
 }

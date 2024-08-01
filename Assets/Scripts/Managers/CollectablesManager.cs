@@ -8,6 +8,7 @@ using DG.Tweening;
 public class CollectablesManager : MonoBehaviour
 {
     public static CollectablesManager instance;
+    public int CurrentLevel => currentLevel;
     public Image cardImage; // UI Image to display the new card face
     public GameObject unlockMessagePanel; // UI Panel for the unlock message
     public TextMeshProUGUI unlockMessageText; // Text component for the unlock message
@@ -54,6 +55,7 @@ public class CollectablesManager : MonoBehaviour
     private void LoadCardFace()
     {
         cardImage.sprite = cardFaces[currentLevel];
+
     }
 
     public Sprite GetCurrentCardBack()
