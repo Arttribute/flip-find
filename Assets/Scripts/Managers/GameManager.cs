@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,11 +19,16 @@ public class GameManager : MonoBehaviour
     public AudioClip flipSound; // Reference to the card flip sound AudioClip
     public CardBatch[] cardBatches;
 
+    [SerializeField] private TMP_Text _feedBackMessage;
+
+
     private AudioSource audioSource; // AudioSource component to play the background music and sounds
-    private Sprite[] currentCardBatch;
-    private Sprite defaultCardBack; // Store the default card back
     private Card firstFlippedCard;
     private Card secondFlippedCard;
+    private Sprite[] currentCardBatch;
+    private Sprite defaultCardBack; // Store the default card back
+    private TMP_Text[] _feedBackMessages;
+
     private bool isCheckingForMatch = false; // Flag to prevent additional flips while checking for match
 
 
@@ -101,6 +107,7 @@ public class GameManager : MonoBehaviour
 
         // Play flip sound
         PlayFlipSound();
+        //_feedBackMessage.SetActive(false);
 
         if (firstFlippedCard == null)
         {
@@ -130,6 +137,13 @@ public class GameManager : MonoBehaviour
 
             // Update score
             UIManager.Instance.AddScore(10); // Add points for a correct match
+
+            if (UIManager.Instance.CardFaceScore == 30)
+            {
+                //int randomIndex = Random.Range(0, _feedBackMessages.Length);
+                //_feedBackMessage.SetActive(true);
+                _feedBackMessage.text = "Great";
+            }
 
             CheckLevelCompletion();
         }
