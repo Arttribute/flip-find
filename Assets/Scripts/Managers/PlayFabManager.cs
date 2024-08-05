@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class PlayFabManager : MonoBehaviour
 {
     public static PlayFabManager Instance;
+    private GameData gameData;
 
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class PlayFabManager : MonoBehaviour
     }
     public void Start()
     {
+        gameData = new GameData();
         if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
         {
             /*
@@ -60,6 +62,7 @@ public class PlayFabManager : MonoBehaviour
         else
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
+            //gameData.LoadGame();
         }
 
     }
