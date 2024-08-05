@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
+
     public int CurrentScore => _currentScore; // Property to access current score
     public int CardFaceScore => _cardFaceScore;
 
@@ -17,25 +18,28 @@ public class UIManager : MonoBehaviour
     [SerializeField] private AudioClip buttonClickSound; // Reference to the button click sound AudioClip
 
     private AudioSource audioSource; // AudioSource component to play the sounds
+    private GameData gameData;
     private int _currentScore;
     private int _cardFaceScore;
 
     void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance == null)
         {
-            Destroy(gameObject);
+            Instance = this;
+
         }
         else
         {
-            Instance = this;
-            audioSource = gameObject.AddComponent<AudioSource>();
+            Destroy(gameObject);
         }
-        DontDestroyOnLoad(gameObject);
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     void Start()
     {
+        gameData = new GameData();
+
         _currentScore = 0;
         ResetScore(); // Initialize the score at the start
 
@@ -47,10 +51,17 @@ public class UIManager : MonoBehaviour
         pauseMenuPanel.SetActive(false);
     }
 
+    public void SetScore(int score)
+    {
+        _currentScore = score;
+        UpdateCurrentScoreUI();
+    }
+
     public void AddScore(int points)
     {
         _currentScore += points;
         _cardFaceScore += points;
+        gameData.SaveGame(CollectablesManager.instance.CurrentLevel, _currentScore);
         UpdateCurrentScoreUI();
     }
 

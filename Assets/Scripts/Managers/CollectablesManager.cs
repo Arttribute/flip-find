@@ -17,8 +17,11 @@ public class CollectablesManager : MonoBehaviour
     public AudioClip unlockSound; // Reference to the unlock sound AudioClip
     public AudioClip scoreSound; // Reference to the score sound AudioClip
 
+    [SerializeField] private Image collectablesBackground;
+
     private AudioSource audioSource; // AudioSource component to play the sounds
     private int currentLevel = 0;
+    private GameData gameData;
     private Sprite currentCardBack = null; // To store the current card back
 
     void Awake()
@@ -26,19 +29,28 @@ public class CollectablesManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            audioSource = gameObject.AddComponent<AudioSource>();
+
+
         }
         else
         {
             Destroy(gameObject);
         }
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     void Start()
     {
+
+        gameData = new GameData();
         LoadCardFace();
         HideScoreMessage();
-        // currentCardBack = cardFaces[currentLevel]; // Do not set the card back initially
+        currentCardBack = cardFaces[currentLevel];
+    }
+
+    public void SetLevel(int level)
+    {
+        currentLevel = level;
     }
 
     public void OnLevelUp()
@@ -50,18 +62,22 @@ public class CollectablesManager : MonoBehaviour
             currentCardBack = cardFaces[currentLevel]; // Update the card back
             ShowUnlockMessage();
         }
+        gameData.SaveGame(currentLevel, UIManager.Instance.CurrentScore);
     }
 
     private void LoadCardFace()
     {
         cardImage.sprite = cardFaces[currentLevel];
+        collectablesBackground.sprite = GameManager.Instance.batchBackground[currentLevel];
 
     }
 
     public Sprite GetCurrentCardBack()
     {
+        currentCardBack = cardFaces[currentLevel];
         return currentCardBack;
     }
+
 
     private void ShowUnlockMessage()
     {

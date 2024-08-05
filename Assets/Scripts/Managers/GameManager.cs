@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    public Image GameBackground => gameBackground;
     public Sprite[] CurrentCardBatch => currentCardBatch;
     public bool IsCheckingForMatch => isCheckingForMatch; // Public property to access isCheckingForMatch
 
@@ -28,8 +29,8 @@ public class GameManager : MonoBehaviour
     private AudioSource audioSource; // AudioSource component to play the background music and sounds
     private Card firstFlippedCard;
     private Card secondFlippedCard;
+    private GameData gameData;
     private Sprite[] currentCardBatch;
-    private Sprite defaultCardBack; // Store the default card back
     private bool isCheckingForMatch = false; // Flag to prevent additional flips while checking for match
 
     private void Awake()
@@ -48,9 +49,19 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        defaultCardBack = cardPrefab.GetComponent<Card>().cardBack; // Set the default card back
+        gameData = new GameData();
+        StartCoroutine(InitializeGame());
         gameBackground.sprite = batchBackground[0];
+
+    }
+
+    private IEnumerator InitializeGame()
+    {
+        yield return new WaitUntil(() => CollectablesManager.instance != null && UIManager.Instance != null);
+
+        gameData.LoadGame();
         LoadCardBatch();
+        LoadBatchBackground();
         GenerateCards();
         PlayBackgroundMusic();
     }
@@ -72,7 +83,9 @@ public class GameManager : MonoBehaviour
             Card card = cardObject.GetComponent<Card>();
             card.SetCardImage(image);
             Sprite currentCardBack = CollectablesManager.instance.GetCurrentCardBack();
-            card.SetCardBack(currentCardBack != null ? currentCardBack : defaultCardBack); // Set card back
+
+
+            card.SetCardBack(currentCardBack);
             CardAnim cardAnim = cardObject.GetComponent<CardAnim>();
             cardAnim.Init(card); // Initialize CardAnim with the Card reference
         }
@@ -116,6 +129,7 @@ public class GameManager : MonoBehaviour
 
         // Play flip sound
         PlayFlipSound();
+
         feedbackBackground.SetActive(false);
 
         if (firstFlippedCard == null)
@@ -147,8 +161,6 @@ public class GameManager : MonoBehaviour
             // Update score
             UIManager.Instance.AddScore(10); // Add points for a correct match
 
-            // Show feedback message based on the score
-            //ShowFeedbackMessage(UIManager.Instance.CurrentScore);
             ShowFeedbackMessage();
 
             CheckLevelCompletion();
@@ -196,7 +208,7 @@ public class GameManager : MonoBehaviour
         _feedBackMessage.DOFade(1, 0.5f).OnComplete(() =>
         {
             // Fade out the message after a delay
-            _feedBackMessage.DOFade(0, 1f).SetDelay(2.0f).OnComplete(() =>
+            _feedBackMessage.DOFade(0, 1f).SetDelay(3.0f).OnComplete(() =>
             {
                 feedbackBackground.SetActive(false);
             });
