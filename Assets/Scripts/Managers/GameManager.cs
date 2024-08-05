@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using DG.Tweening; // Make sure to include the DOTween namespace
 
 public class GameManager : MonoBehaviour
 {
@@ -21,17 +22,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private TMP_Text _feedBackMessage;
 
-
     private AudioSource audioSource; // AudioSource component to play the background music and sounds
     private Card firstFlippedCard;
     private Card secondFlippedCard;
     private Sprite[] currentCardBatch;
     private Sprite defaultCardBack; // Store the default card back
-    private TMP_Text[] _feedBackMessages;
-
     private bool isCheckingForMatch = false; // Flag to prevent additional flips while checking for match
-
-
 
     private void Awake()
     {
@@ -63,7 +59,7 @@ public class GameManager : MonoBehaviour
     public void GenerateCards()
     {
         List<Sprite> images = new List<Sprite>(currentCardBatch);
-        images.AddRange(currentCardBatch); //Duplicate images for pairs
+        images.AddRange(currentCardBatch); // Duplicate images for pairs
         images = ShuffleList(images);
 
         foreach (Sprite image in images)
@@ -85,7 +81,6 @@ public class GameManager : MonoBehaviour
         {
             currentCardBatch = cardBatches[level].cardFaces;
         }
-
     }
 
     List<Sprite> ShuffleList(List<Sprite> list)
@@ -107,7 +102,6 @@ public class GameManager : MonoBehaviour
 
         // Play flip sound
         PlayFlipSound();
-        //_feedBackMessage.SetActive(false);
 
         if (firstFlippedCard == null)
         {
@@ -138,12 +132,8 @@ public class GameManager : MonoBehaviour
             // Update score
             UIManager.Instance.AddScore(10); // Add points for a correct match
 
-            if (UIManager.Instance.CardFaceScore == 30)
-            {
-                //int randomIndex = Random.Range(0, _feedBackMessages.Length);
-                //_feedBackMessage.SetActive(true);
-                _feedBackMessage.text = "Great";
-            }
+            // Show feedback message based on the score
+            ShowFeedbackMessage(UIManager.Instance.CurrentScore);
 
             CheckLevelCompletion();
         }
@@ -158,6 +148,61 @@ public class GameManager : MonoBehaviour
         firstFlippedCard = null;
         secondFlippedCard = null;
         isCheckingForMatch = false; // Clear flag after match check is complete
+    }
+
+    private void ShowFeedbackMessage(int score)
+    {
+        // Determine feedback message based on score
+        string message = "";
+        if (score == 30)
+        {
+            message = "Great job!";
+        }
+        else if (score == 60)
+        {
+            message = "You're getting good at this!";
+        }
+        else if (score == 90)
+        {
+            message = "Fantastic! Keep it up!";
+        }
+        else if (score == 120)
+        {
+            message = "Amazing skills!";
+        }
+        else if (score == 150)
+        {
+            message = "Incredible! You're unstoppable!";
+        }
+         else if (score == 180)
+        {
+            message = "Wow keep it up!";
+        }
+         else if (score == 220)
+        {
+            message = "That was great!";
+        }
+         else if (score == 280)
+        {
+            message = "You're a natural!";
+        }
+         else if (score == 350)
+        {
+            message = "You nailed it!";
+        }
+
+        if (!string.IsNullOrEmpty(message))
+        {
+            _feedBackMessage.text = message; // Set the message
+            _feedBackMessage.alpha = 0; // Set the text to transparent initially
+
+            // Use DOTween to animate the text appearance
+            _feedBackMessage.DOFade(1, 0.5f).OnComplete(() =>
+            {
+                // Fade out the message after a delay
+                _feedBackMessage.DOFade(0, 1f).SetDelay(3.0f);
+            });
+        }
     }
 
     private void CheckLevelCompletion()
