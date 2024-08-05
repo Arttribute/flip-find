@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public CardBatch[] cardBatches;
 
     [SerializeField] private TMP_Text _feedBackMessage;
+    [SerializeField] private GameObject feedbackMessage;
 
     private AudioSource audioSource; // AudioSource component to play the background music and sounds
     private Card firstFlippedCard;
@@ -102,6 +103,7 @@ public class GameManager : MonoBehaviour
 
         // Play flip sound
         PlayFlipSound();
+        feedbackMessage.SetActive(false);
 
         if (firstFlippedCard == null)
         {
@@ -133,7 +135,8 @@ public class GameManager : MonoBehaviour
             UIManager.Instance.AddScore(10); // Add points for a correct match
 
             // Show feedback message based on the score
-            ShowFeedbackMessage(UIManager.Instance.CurrentScore);
+            //ShowFeedbackMessage(UIManager.Instance.CurrentScore);
+            ShowFeedbackMessage();
 
             CheckLevelCompletion();
         }
@@ -150,59 +153,43 @@ public class GameManager : MonoBehaviour
         isCheckingForMatch = false; // Clear flag after match check is complete
     }
 
-    private void ShowFeedbackMessage(int score)
+    private void ShowFeedbackMessage()
     {
-        // Determine feedback message based on score
-        string message = "";
-        if (score == 30)
+        List<string> messages = new List<string>
         {
-            message = "Great job!";
-        }
-        else if (score == 60)
+            "Great job!",
+            "You're getting good at this!",
+            "Fantastic! Keep it up!",
+            "Amazing skills!",
+            "Incredible! You're unstoppable!",
+            "Wow! Keep it up!",
+            "That was great!",
+            "You're a natural!",
+            "You nailed it!",
+        };
+
+        int index = Random.Range(0, messages.Count);
+
+        if (UIManager.Instance.CardFaceScore == 30)
         {
-            message = "You're getting good at this!";
-        }
-        else if (score == 90)
-        {
-            message = "Fantastic! Keep it up!";
-        }
-        else if (score == 120)
-        {
-            message = "Amazing skills!";
-        }
-        else if (score == 150)
-        {
-            message = "Incredible! You're unstoppable!";
-        }
-         else if (score == 180)
-        {
-            message = "Wow keep it up!";
-        }
-         else if (score == 220)
-        {
-            message = "That was great!";
-        }
-         else if (score == 280)
-        {
-            message = "You're a natural!";
-        }
-         else if (score == 350)
-        {
-            message = "You nailed it!";
+            feedbackMessage.SetActive(true);
+
+            _feedBackMessage.text = messages[index];
         }
 
-        if (!string.IsNullOrEmpty(message))
-        {
-            _feedBackMessage.text = message; // Set the message
-            _feedBackMessage.alpha = 0; // Set the text to transparent initially
+        _feedBackMessage.alpha = 0; // Set the text to transparent initially
 
-            // Use DOTween to animate the text appearance
-            _feedBackMessage.DOFade(1, 0.5f).OnComplete(() =>
+        // Use DOTween to animate the text appearance
+        _feedBackMessage.DOFade(1, 0.5f).OnComplete(() =>
+        {
+            // Fade out the message after a delay
+            _feedBackMessage.DOFade(0, 1f).SetDelay(2.0f).OnComplete(() =>
             {
-                // Fade out the message after a delay
-                _feedBackMessage.DOFade(0, 1f).SetDelay(3.0f);
+                feedbackMessage.SetActive(false);
             });
-        }
+
+        });
+
     }
 
     private void CheckLevelCompletion()
