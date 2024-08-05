@@ -62,6 +62,7 @@ public class CollectablesManager : MonoBehaviour
             currentCardBack = cardFaces[currentLevel]; // Update the card back
             ShowUnlockMessage();
         }
+
         gameData.SaveGame(currentLevel, UIManager.Instance.CurrentScore);
     }
 

@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameData = new GameData();
+        PlayBackgroundMusic();
         StartCoroutine(InitializeGame());
         gameBackground.sprite = batchBackground[0];
 
@@ -63,7 +64,7 @@ public class GameManager : MonoBehaviour
         LoadCardBatch();
         LoadBatchBackground();
         GenerateCards();
-        PlayBackgroundMusic();
+
     }
 
     public void Quit()

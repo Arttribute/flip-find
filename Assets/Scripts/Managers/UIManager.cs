@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     public int CardFaceScore => _cardFaceScore;
 
     [SerializeField] private TextMeshProUGUI _currentScoreText;
+    [SerializeField] private TextMeshProUGUI _highScoreText;
     [SerializeField] private GameObject pauseMenuPanel; // Reference to the pause menu panel
     [SerializeField] private Button pauseButton; // Reference to the pause button
     [SerializeField] private Button resumeButton; // Reference to the resume button
@@ -20,6 +21,7 @@ public class UIManager : MonoBehaviour
     private AudioSource audioSource; // AudioSource component to play the sounds
     private GameData gameData;
     private int _currentScore;
+    private int highScore;
     private int _cardFaceScore;
 
     void Awake()
@@ -57,6 +59,13 @@ public class UIManager : MonoBehaviour
         UpdateCurrentScoreUI();
     }
 
+    public void DisplayHighScore()
+    {
+        highScore = gameData.GetHighScore();
+        _highScoreText.text = highScore.ToString();
+
+    }
+
     public void AddScore(int points)
     {
         _currentScore += points;
@@ -67,14 +76,16 @@ public class UIManager : MonoBehaviour
 
     public void ResetScore()
     {
-        //_currentScore = 0;
         _cardFaceScore = 0;
         UpdateCurrentScoreUI();
+        DisplayHighScore();
     }
 
     private void UpdateCurrentScoreUI()
     {
+        highScore = gameData.GetHighScore();
         _currentScoreText.text = "SCORE: " + _currentScore.ToString();
+        _highScoreText.text = highScore.ToString();
     }
 
     private void TogglePauseMenu()

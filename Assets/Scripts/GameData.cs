@@ -1,17 +1,27 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameData : MonoBehaviour
 {
     private const string LevelKey = "Level";
     private const string ScoreKey = "Score";
+    private const string HighScoreKey = "HighScore";
 
     public void SaveGame(int currentLevel, int currentScore)
     {
+        int highScore = PlayerPrefs.GetInt(HighScoreKey);
+
         PlayerPrefs.SetInt(LevelKey, currentLevel);
         PlayerPrefs.SetInt(ScoreKey, currentScore);
+        if (currentScore > highScore)
+        {
+            PlayerPrefs.SetInt(HighScoreKey, currentScore);
+        }
+
         PlayerPrefs.Save(); //Ensures data is written to disk
         Debug.Log("Game data saved!");
     }
+
 
     public void LoadGame()
     {
@@ -41,6 +51,13 @@ public class GameData : MonoBehaviour
 
 
     }
+
+    public int GetHighScore()
+    {
+        return PlayerPrefs.GetInt(HighScoreKey, 0);
+    }
+
+
 
     private void OnApplicationPause(bool pause)
     {
