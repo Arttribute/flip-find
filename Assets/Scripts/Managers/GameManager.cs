@@ -19,9 +19,11 @@ public class GameManager : MonoBehaviour
     public AudioClip backgroundMusic; // Reference to the background music AudioClip
     public AudioClip flipSound; // Reference to the card flip sound AudioClip
     public CardBatch[] cardBatches;
+    public Sprite[] batchBackground;
 
+    [SerializeField] private Image gameBackground;
     [SerializeField] private TMP_Text _feedBackMessage;
-    [SerializeField] private GameObject feedbackMessage;
+    [SerializeField] private GameObject feedbackBackground;
 
     private AudioSource audioSource; // AudioSource component to play the background music and sounds
     private Card firstFlippedCard;
@@ -47,6 +49,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         defaultCardBack = cardPrefab.GetComponent<Card>().cardBack; // Set the default card back
+        gameBackground.sprite = batchBackground[0];
         LoadCardBatch();
         GenerateCards();
         PlayBackgroundMusic();
@@ -84,6 +87,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void LoadBatchBackground()
+    {
+        int level = CollectablesManager.instance.CurrentLevel;
+        if (level < batchBackground.Length)
+        {
+            gameBackground.sprite = batchBackground[level];
+        }
+
+    }
+
     List<Sprite> ShuffleList(List<Sprite> list)
     {
         for (int i = 0; i < list.Count; i++)
@@ -103,7 +116,7 @@ public class GameManager : MonoBehaviour
 
         // Play flip sound
         PlayFlipSound();
-        feedbackMessage.SetActive(false);
+        feedbackBackground.SetActive(false);
 
         if (firstFlippedCard == null)
         {
@@ -172,7 +185,7 @@ public class GameManager : MonoBehaviour
 
         if (UIManager.Instance.CardFaceScore == 30)
         {
-            feedbackMessage.SetActive(true);
+            feedbackBackground.SetActive(true);
 
             _feedBackMessage.text = messages[index];
         }
@@ -185,7 +198,7 @@ public class GameManager : MonoBehaviour
             // Fade out the message after a delay
             _feedBackMessage.DOFade(0, 1f).SetDelay(2.0f).OnComplete(() =>
             {
-                feedbackMessage.SetActive(false);
+                feedbackBackground.SetActive(false);
             });
 
         });
@@ -197,6 +210,7 @@ public class GameManager : MonoBehaviour
         if (UIManager.Instance.CardFaceScore >= 60)
         {
             CollectablesManager.instance.OnLevelUp();
+            LoadBatchBackground();
             UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
             RestartGame(); // Restart the game when level is completed
         }
