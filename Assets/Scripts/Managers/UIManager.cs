@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIManager : MonoBehaviour
 {
@@ -70,7 +71,11 @@ public class UIManager : MonoBehaviour
     {
         _currentScore += points;
         _cardFaceScore += points;
-        gameData.SaveGame(CollectablesManager.instance.CurrentLevel, _currentScore);
+        if (SceneManager.GetActiveScene().name == "MainScene")
+        {
+            gameData.SaveGame(CollectablesManager.instance.CurrentLevel, _currentScore);
+        }
+
         UpdateCurrentScoreUI();
     }
 
