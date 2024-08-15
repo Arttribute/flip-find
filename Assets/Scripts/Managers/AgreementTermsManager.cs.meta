@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: c858b608052339342a7f4f2da68aedbd
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - eulaPanel: {fileID: 8642605256880733198, guid: b3bf4d216a1b84647869d6bc46be9b0a, type: 3}
+  - acceptButton: {instanceID: 0}
+  - declineButton: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

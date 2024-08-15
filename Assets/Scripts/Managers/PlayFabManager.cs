@@ -1,7 +1,6 @@
 using PlayFab;
 using PlayFab.ClientModels;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class PlayFabManager : MonoBehaviour
 {
@@ -20,22 +19,16 @@ public class PlayFabManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     public void Start()
     {
         gameData = new GameData();
         if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
         {
-            /*
-            Please change the titleId below to your own titleId from PlayFab Game Manager.
-            If you have already set the value in the Editor Extensions, this can be skipped.
-            */
-            PlayFabSettings.staticSettings.TitleId = "FF1F3";
+            PlayFabSettings.staticSettings.TitleId = "FF1F3"; // Replace with your Title ID
         }
-        //var request = new LoginWithCustomIDRequest { CustomId = "GettingStartedGuide", CreateAccount = true };
-        //PlayFabClientAPI.LoginWithCustomID(request, OnLoginSuccess, OnLoginFailure);
 
         Login();
-
     }
 
     private void Login()
@@ -45,7 +38,7 @@ public class PlayFabManager : MonoBehaviour
         PlayFabClientAPI.LoginWithAndroidDeviceID(requestAndroid, OnLoginMobileSuccess, OnLoginMobileFailure);
 #endif
 #if UNITY_IOS
-        var requestIOS = new LoginWithIOSDeviceIDRequest {DeviceId = ReturnMobileID(), CreateAccount = true};
+        var requestIOS = new LoginWithIOSDeviceIDRequest { DeviceId = ReturnMobileID(), CreateAccount = true };
         PlayFabClientAPI.LoginWithIOSDeviceID(requestIOS, OnLoginMobileSuccess, OnLoginMobileFailure);
 #endif
     }
@@ -57,14 +50,14 @@ public class PlayFabManager : MonoBehaviour
 
         if (result.NewlyCreated)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Tutorial");
+            // If the user is new, load the EULA scene before the tutorial
+            UnityEngine.SceneManagement.SceneManager.LoadScene("EndUserLicense");
         }
         else
         {
+            // If the user is not new, load the main game scene
             UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
-            //gameData.LoadGame();
         }
-
     }
 
     private void OnLoginMobileFailure(PlayFabError error)
@@ -72,10 +65,8 @@ public class PlayFabManager : MonoBehaviour
         Debug.Log(error.GenerateErrorReport());
     }
 
-
     public static string ReturnMobileID()
     {
-        string deviceID = SystemInfo.deviceUniqueIdentifier;
-        return deviceID;
+        return SystemInfo.deviceUniqueIdentifier;
     }
 }
