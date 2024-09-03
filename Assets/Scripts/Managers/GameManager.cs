@@ -25,10 +25,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image gameBackground;
     [SerializeField] private TMP_Text _feedBackMessage;
     [SerializeField] private GameObject feedbackBackground;
+    [SerializeField] private GameObject gameOverbackground;
 
     private AudioSource audioSource; // AudioSource component to play the background music and sounds
     private Card firstFlippedCard;
     private Card secondFlippedCard;
+    private int currentMoves = 0;
+    private const int maxMoves = 20;
     private GameData gameData;
     private Sprite[] currentCardBatch;
     private bool isCheckingForMatch = false; // Flag to prevent additional flips while checking for match
@@ -131,6 +134,13 @@ public class GameManager : MonoBehaviour
         // Play flip sound
         PlayFlipSound();
 
+        currentMoves++;
+
+        if (currentMoves > maxMoves)
+        {
+            GameOver();
+        }
+
         feedbackBackground.SetActive(false);
 
         if (firstFlippedCard == null)
@@ -225,6 +235,7 @@ public class GameManager : MonoBehaviour
             CollectablesManager.instance.OnLevelUp();
             LoadBatchBackground();
             UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
+            currentMoves = 0;
             RestartGame(); // Restart the game when level is completed
         }
     }
@@ -257,5 +268,11 @@ public class GameManager : MonoBehaviour
         // Load a new card batch and generate new cards
         LoadCardBatch();
         GenerateCards();
+    }
+
+    private void GameOver()
+    {
+        gameOverbackground.SetActive(true);
+
     }
 }
