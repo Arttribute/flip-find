@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI _currentScoreText;
     [SerializeField] private TextMeshProUGUI _highScoreText;
+    [SerializeField] private TextMeshProUGUI _finalhighScoreText;
     [SerializeField] private GameObject pauseMenuPanel; // Reference to the pause menu panel
     [SerializeField] private Button pauseButton; // Reference to the pause button
     [SerializeField] private Button resumeButton; // Reference to the resume button
@@ -64,6 +65,11 @@ public class UIManager : MonoBehaviour
     {
         highScore = gameData.GetHighScore();
         _highScoreText.text = highScore.ToString();
+
+        if (GameManager.Instance.isGameOver == true)
+        {
+            _finalhighScoreText.text = highScore.ToString();
+        }
 
     }
 
