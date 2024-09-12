@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public Sprite[] CurrentCardBatch => currentCardBatch;
     public bool IsCheckingForMatch => isCheckingForMatch; // Public property to access isCheckingForMatch
 
+    public bool isGameOver;
     public GameObject cardPrefab;
     public Transform gridTransform;
     public Transform fullImageTransform; // Reference to the UI element to show full image
@@ -26,6 +27,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text _feedBackMessage;
     [SerializeField] private GameObject feedbackBackground;
     [SerializeField] private GameObject gameOverbackground;
+    [SerializeField] private TMP_Text totalScore;
+    [SerializeField] private TMP_Text lastLevel;
+    [SerializeField] private TMP_Text finalTime;
 
     private AudioSource audioSource; // AudioSource component to play the background music and sounds
     private Card firstFlippedCard;
@@ -272,7 +276,21 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
+        isGameOver = true;
         gameOverbackground.SetActive(true);
+
+        lastLevel.text = "Level: " + CollectablesManager.instance.CurrentLevel.ToString();
+        totalScore.text = UIManager.Instance.CurrentScore.ToString();
+        UIManager.Instance.DisplayHighScore();
+
+        Timer timer = FindObjectOfType<Timer>();
+        if (timer != null)
+        {
+            finalTime.text = timer.DisplayFinalTime();
+        }
+
+        Time.timeScale = 0;
+
 
     }
 }
