@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     private Card firstFlippedCard;
     private Card secondFlippedCard;
     private int currentMoves = 0;
-    private const int maxMoves = 20;
+    private const int maxMoves = 40;
     private GameData gameData;
     private Sprite[] currentCardBatch;
     private bool isCheckingForMatch = false; // Flag to prevent additional flips while checking for match
