@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     private int currentMoves = 0;
     private const int maxMoves = 40;
     private GameData gameData;
+    private GoogleAdsInitializer adMob;
     private Sprite[] currentCardBatch;
     private bool isCheckingForMatch = false; // Flag to prevent additional flips while checking for match
 
@@ -57,9 +58,11 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameData = new GameData();
+        adMob = new GoogleAdsInitializer();
         PlayBackgroundMusic();
         StartCoroutine(InitializeGame());
         gameBackground.sprite = batchBackground[0];
+        //adMob.CreateBannerView();
 
     }
 
@@ -71,6 +74,8 @@ public class GameManager : MonoBehaviour
         LoadCardBatch();
         LoadBatchBackground();
         GenerateCards();
+        adMob.CreateBannerView();
+
 
     }
 
