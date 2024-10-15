@@ -62,7 +62,6 @@ public class GameManager : MonoBehaviour
         PlayBackgroundMusic();
         StartCoroutine(InitializeGame());
         gameBackground.sprite = batchBackground[0];
-        //adMob.CreateBannerView();
 
     }
 
@@ -74,7 +73,7 @@ public class GameManager : MonoBehaviour
         LoadCardBatch();
         LoadBatchBackground();
         GenerateCards();
-        adMob.CreateBannerView();
+        adMob.RequestBanner();
 
 
     }

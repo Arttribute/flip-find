@@ -27,15 +27,15 @@ public class GoogleAdsInitializer : MonoBehaviour
     BannerView _bannerView;
 
 
-    public void CreateBannerView()
+    public void RequestBanner()
     {
         Debug.Log("Creating banner view");
 
-        // // If we already have a banner, destroy the old one.
-        // if (_bannerView != null)
-        // {
-        //     DestroyAd();
-        // }
+        // If we already have a banner, destroy the old one.
+        if (_bannerView != null)
+        {
+            DestroyAd();
+        }
 
         // Create a 320x50 banner views at coordinate (0,50) on screen.
         _bannerView = new BannerView(_adUnitId, AdSize.Banner, AdPosition.Bottom);
@@ -46,5 +46,10 @@ public class GoogleAdsInitializer : MonoBehaviour
         // send the request to load the ad.
         Debug.Log("Loading banner ad.");
         _bannerView.LoadAd(adRequest);
+    }
+
+    public void DestroyAd()
+    {
+        _bannerView.Destroy();
     }
 }
