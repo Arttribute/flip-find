@@ -53,6 +53,11 @@ public class CollectablesManager : MonoBehaviour
         currentLevel = level;
     }
 
+    public void ResetCurrentLevel()
+    {
+        currentLevel = 0;
+    }
+
     public void OnLevelUp()
     {
         currentLevel++;
