@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public bool IsCheckingForMatch => isCheckingForMatch; // Public property to access isCheckingForMatch
 
     public bool isGameOver;
+    public bool _newGame = false;
     public GameObject cardPrefab;
     public Transform gridTransform;
     public Transform fullImageTransform; // Reference to the UI element to show full image
@@ -35,7 +36,7 @@ public class GameManager : MonoBehaviour
     private Card firstFlippedCard;
     private Card secondFlippedCard;
     private int currentMoves = 0;
-    private const int maxMoves = 40;
+    private const int maxMoves = 36;
     private GameData gameData;
     private GoogleAdsInitializer adMob;
     private Sprite[] currentCardBatch;
@@ -106,6 +107,11 @@ public class GameManager : MonoBehaviour
     public void LoadCardBatch()
     {
         int level = CollectablesManager.instance.CurrentLevel;
+
+        if (_newGame == true)
+        {
+            level = 0;
+        }
         if (level < cardBatches.Length)
         {
             currentCardBatch = cardBatches[level].cardFaces;
@@ -115,6 +121,11 @@ public class GameManager : MonoBehaviour
     public void LoadBatchBackground()
     {
         int level = CollectablesManager.instance.CurrentLevel;
+
+        if (_newGame == true)
+        {
+            level = 0;
+        }
         if (level < batchBackground.Length)
         {
             gameBackground.sprite = batchBackground[level];
@@ -244,7 +255,7 @@ public class GameManager : MonoBehaviour
             LoadBatchBackground();
             UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
             currentMoves = 0;
-            RestartGame(); // Restart the game when level is completed
+            RefreshGame(); // Refresh the game when level is completed
         }
     }
 
@@ -266,7 +277,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void RestartGame()
+    public void RefreshGame()
     {
         // Clear existing cards
         foreach (Transform child in gridTransform)
@@ -275,7 +286,26 @@ public class GameManager : MonoBehaviour
         }
         // Load a new card batch and generate new cards
         LoadCardBatch();
+        LoadBatchBackground();
+
         GenerateCards();
+
+    }
+
+    public void RestartGame()
+    {
+        _newGame = true;
+        CollectablesManager.instance.ResetCurrentLevel();
+        currentMoves = 0;
+
+        UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
+        UIManager.Instance.SetScore(0);
+
+        RefreshGame();
+        gameOverbackground.SetActive(false);
+
+        Timer timer = FindObjectOfType<Timer>();
+        timer.ResetTimer();
     }
 
     private void GameOver()
