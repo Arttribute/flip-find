@@ -303,6 +303,7 @@ public class GameManager : MonoBehaviour
 
         RefreshGame();
         gameOverbackground.SetActive(false);
+        gameData.SaveGame(CollectablesManager.instance.CurrentLevel, UIManager.Instance.CurrentScore);
 
         Timer timer = FindObjectOfType<Timer>();
         timer.ResetTimer();
