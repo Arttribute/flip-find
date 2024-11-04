@@ -1084,7 +1084,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 20ba830adad29b141a80c4e049e3101b, type: 3}
   - {fileID: 21300000, guid: 79e31dbc35358bf479560e8221df2522, type: 3}
   - {fileID: 21300000, guid: a9cb4b9d665e89c45b25258c2798109e, type: 3}
-  - {fileID: 21300000, guid: abe38e60a2d1e2243bed76992549e07c, type: 3}
+  - {fileID: 21300000, guid: 1758658190e8a874cbe8c810df0885a4, type: 3}
   - {fileID: 21300000, guid: 3455e350e67bdf740987daba8531292e, type: 3}
   tutorialText: {fileID: 2011980698}
   tutorialPointer: {fileID: 2016952730}
@@ -1123,6 +1123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timerText: {fileID: 465542760}
+  finalTimerText: {fileID: 0}
 --- !u!82 &476700467
 AudioSource:
   m_ObjectHideFlags: 0
