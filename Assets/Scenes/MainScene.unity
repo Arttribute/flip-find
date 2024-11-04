@@ -1248,8 +1248,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 55
-  m_fontSizeBase: 55
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -4701,23 +4701,23 @@ PrefabInstance:
     - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: batchBackground.Array.data[1]
       value: 
-      objectReference: {fileID: 21300000, guid: 7307a948fe7d51241a579825183b0af4, type: 3}
+      objectReference: {fileID: 21300000, guid: f58eb6f6fb6775a498cd41aa64ea303d, type: 3}
     - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: batchBackground.Array.data[2]
       value: 
-      objectReference: {fileID: 21300000, guid: 0e322fd1dedc9064fb674e89e3bbfdb4, type: 3}
+      objectReference: {fileID: 21300000, guid: c97e5253bee340f4b843028b4daafa63, type: 3}
     - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: batchBackground.Array.data[3]
       value: 
-      objectReference: {fileID: 21300000, guid: 2f730da4a05d6264aa5b908c8bd908cf, type: 3}
+      objectReference: {fileID: 21300000, guid: e3d73311c12ebcc449db4c3a04cefef2, type: 3}
     - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: batchBackground.Array.data[4]
       value: 
-      objectReference: {fileID: 21300000, guid: 25767e439042fd94683fbdb8946b10b3, type: 3}
+      objectReference: {fileID: 21300000, guid: 4c1bf3a56905ad5448ac127095814cf8, type: 3}
     - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: batchBackground.Array.data[5]
       value: 
-      objectReference: {fileID: 21300000, guid: 1ce1a1ed5d806d44c902cd198e206e16, type: 3}
+      objectReference: {fileID: 21300000, guid: d4a9e993f87fe564a848e7a8e9458c18, type: 3}
     - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: batchBackground.Array.data[6]
       value: 
@@ -4729,11 +4729,11 @@ PrefabInstance:
     - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: batchBackground.Array.data[8]
       value: 
-      objectReference: {fileID: 21300000, guid: a1ea25157beef444fa75735e3cf2221d, type: 3}
+      objectReference: {fileID: 21300000, guid: a06620872bbebf042bbb9f7bf18a6a16, type: 3}
     - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: batchBackground.Array.data[9]
       value: 
-      objectReference: {fileID: 21300000, guid: 8368c333a3ccbf9468c2b0311673a931, type: 3}
+      objectReference: {fileID: 21300000, guid: 98a81e28f0e9d76429f7c0a67592c28b, type: 3}
     - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: cardBatches.Array.data[0].cardFaces.Array.size
       value: 6
@@ -4993,7 +4993,7 @@ PrefabInstance:
     - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: cardBatches.Array.data[9].cardFaces.Array.data[0]
       value: 
-      objectReference: {fileID: 21300000, guid: 98a81e28f0e9d76429f7c0a67592c28b, type: 3}
+      objectReference: {fileID: 21300000, guid: 8368c333a3ccbf9468c2b0311673a931, type: 3}
     - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: cardBatches.Array.data[9].cardFaces.Array.data[1]
       value: 
