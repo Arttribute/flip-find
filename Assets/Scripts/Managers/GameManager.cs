@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private Image gameBackground;
     [SerializeField] private TMP_Text _feedBackMessage;
+    [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject feedbackBackground;
     [SerializeField] private GameObject gameOverbackground;
     [SerializeField] private TMP_Text totalScore;
@@ -86,6 +87,7 @@ public class GameManager : MonoBehaviour
 
     public void GenerateCards()
     {
+
         List<Sprite> images = new List<Sprite>(currentCardBatch);
         images.AddRange(currentCardBatch); // Duplicate images for pairs
         images = ShuffleList(images);
@@ -116,6 +118,11 @@ public class GameManager : MonoBehaviour
         {
             currentCardBatch = cardBatches[level].cardFaces;
         }
+        else
+        {
+            int randomIndex = Random.Range(0, cardBatches.Length);
+            currentCardBatch = cardBatches[randomIndex].cardFaces;
+        }
     }
 
     public void LoadBatchBackground()
@@ -129,6 +136,11 @@ public class GameManager : MonoBehaviour
         if (level < batchBackground.Length)
         {
             gameBackground.sprite = batchBackground[level];
+        }
+        else
+        {
+            int randomIndex = Random.Range(0, batchBackground.Length);
+            gameBackground.sprite = batchBackground[randomIndex];
         }
 
     }
@@ -252,10 +264,12 @@ public class GameManager : MonoBehaviour
         if (UIManager.Instance.CardFaceScore >= 60)
         {
             CollectablesManager.instance.OnLevelUp();
+
             LoadBatchBackground();
             UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
             currentMoves = 0;
             RefreshGame(); // Refresh the game when level is completed
+
         }
     }
 
@@ -307,6 +321,14 @@ public class GameManager : MonoBehaviour
 
         Timer timer = FindObjectOfType<Timer>();
         timer.ResetTimer();
+    }
+
+    public void OpenMainMenu()
+    {
+        //RestartGame();
+        mainMenu.SetActive(true);
+
+
     }
 
     private void GameOver()

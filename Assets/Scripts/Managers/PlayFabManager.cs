@@ -45,8 +45,8 @@ public class PlayFabManager : MonoBehaviour
 
     private void OnLoginMobileSuccess(LoginResult result)
     {
-        Debug.Log("Login successful!");
         LoadingScreen.instance.HideLoadingSpinner();
+        //UnityEngine.SceneManagement.SceneManager.LoadScene("EndUserLicense");
 
         if (result.NewlyCreated)
         {
