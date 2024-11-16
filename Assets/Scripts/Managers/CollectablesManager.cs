@@ -80,7 +80,15 @@ public class CollectablesManager : MonoBehaviour
 
     public Sprite GetCurrentCardBack()
     {
-        currentCardBack = cardFaces[currentLevel];
+        if (currentLevel >= cardFaces.Length)
+        {
+            currentCardBack = cardFaces[Random.Range(0, cardFaces.Length)];
+        }
+        else
+        {
+            currentCardBack = cardFaces[currentLevel];
+        }
+
         return currentCardBack;
     }
 
