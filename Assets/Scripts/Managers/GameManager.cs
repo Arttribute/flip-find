@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -55,6 +56,13 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
         }
         audioSource = gameObject.AddComponent<AudioSource>();
+
+        AudioMixerGroup[] audioMixerGroups = Resources.Load<AudioMixer>("VolumeMixer").FindMatchingGroups("Master");
+
+        if (audioMixerGroups.Length > 0)
+        {
+            audioSource.outputAudioMixerGroup = audioMixerGroups[0];
+        }
     }
 
     void Start()
