@@ -3817,9 +3817,9 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1080, y: 1920}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.5
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -4705,6 +4705,38 @@ PrefabInstance:
       propertyPath: gameOverbackground
       value: 
       objectReference: {fileID: 1263544142}
+    - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
+      propertyPath: batchBackground.Array.data[1]
+      value: 
+      objectReference: {fileID: 21300000, guid: 0910feabb9164d047991d09651fa9258, type: 3}
+    - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
+      propertyPath: batchBackground.Array.data[2]
+      value: 
+      objectReference: {fileID: 21300000, guid: 1d860825a2845fe408d227e06bc63806, type: 3}
+    - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
+      propertyPath: batchBackground.Array.data[7]
+      value: 
+      objectReference: {fileID: 21300000, guid: 076f5bfb8c6a24c4a832ceff954784c5, type: 3}
+    - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
+      propertyPath: batchBackground.Array.data[8]
+      value: 
+      objectReference: {fileID: 21300000, guid: 5da7cdb3f472b774b8112dc537e261f4, type: 3}
+    - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
+      propertyPath: cardBatches.Array.data[8].cardFaces.Array.data[0]
+      value: 
+      objectReference: {fileID: 21300000, guid: 9ec644867078dad489c2cf8451ccf382, type: 3}
+    - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
+      propertyPath: cardBatches.Array.data[8].cardFaces.Array.data[3]
+      value: 
+      objectReference: {fileID: 21300000, guid: f65110a48434cce4995391ef251b5cce, type: 3}
+    - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
+      propertyPath: cardBatches.Array.data[8].cardFaces.Array.data[4]
+      value: 
+      objectReference: {fileID: 21300000, guid: ee3a495be4c244f4192f40eb459af78b, type: 3}
+    - target: {fileID: 2967574586360422572, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
+      propertyPath: cardBatches.Array.data[8].cardFaces.Array.data[5]
+      value: 
+      objectReference: {fileID: 21300000, guid: 817bcddff0412a44984e0511a24d4d5f, type: 3}
     - target: {fileID: 4235074907063147842, guid: f35c8c1d77897474b89d4be04d8d861f, type: 3}
       propertyPath: volumeSlider
       value: 
@@ -4884,6 +4916,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2444677309189255206}
+    - target: {fileID: 8479601006151973875, guid: 7ef2097baad3f264d8fb690b5543d7da, type: 3}
+      propertyPath: hiddenPosition.x
+      value: -1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -13,14 +13,14 @@ public class AgreementTermsManager : MonoBehaviour
     void Start()
     {
         ShowEULA();
-        acceptButton.interactable = false;
+        //acceptButton.interactable = false;
     }
 
     public void openPrivacyPolicy()
     {
         isPrivacyPolicyOpened = true;
         Application.OpenURL(privacyPolicyURL);
-        EnableAcceptButton();
+        //EnableAcceptButton();
 
     }
 
@@ -44,9 +44,4 @@ public class AgreementTermsManager : MonoBehaviour
         SceneManager.LoadScene("Tutorial"); // Load the tutorial scene
     }
 
-    private void OnDecline()
-    {
-        // Handle decline, for example by exiting the game
-        Application.Quit(); // Exit the game
-    }
 }
