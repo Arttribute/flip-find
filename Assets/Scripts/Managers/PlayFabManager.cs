@@ -23,22 +23,41 @@ public class PlayFabManager : MonoBehaviour
     public void Start()
     {
         gameData = new GameData();
+
         if (string.IsNullOrEmpty(PlayFabSettings.staticSettings.TitleId))
         {
             PlayFabSettings.staticSettings.TitleId = "FF1F3"; // Replace with your Title ID
         }
 
-        Login();
+        if (Application.internetReachability == NetworkReachability.NotReachable)
+        {
+            Debug.LogWarning("No internet connection. Loading offline data");
+            LoadOfflineData();
+        }
+        else
+        {
+            Login();
+        }
+
+
     }
 
     private void Login()
     {
 #if UNITY_ANDROID
-        var requestAndroid = new LoginWithAndroidDeviceIDRequest { AndroidDeviceId = ReturnMobileID(), CreateAccount = true };
+        var requestAndroid = new LoginWithAndroidDeviceIDRequest
+        {
+            AndroidDeviceId = ReturnMobileID(),
+            CreateAccount = true
+        };
         PlayFabClientAPI.LoginWithAndroidDeviceID(requestAndroid, OnLoginMobileSuccess, OnLoginMobileFailure);
 #endif
 #if UNITY_IOS
-        var requestIOS = new LoginWithIOSDeviceIDRequest { DeviceId = ReturnMobileID(), CreateAccount = true };
+        var requestIOS = new LoginWithIOSDeviceIDRequest
+        {
+            DeviceId = ReturnMobileID(),
+            CreateAccount = true
+            };
         PlayFabClientAPI.LoginWithIOSDeviceID(requestIOS, OnLoginMobileSuccess, OnLoginMobileFailure);
 #endif
     }
@@ -46,7 +65,6 @@ public class PlayFabManager : MonoBehaviour
     private void OnLoginMobileSuccess(LoginResult result)
     {
         LoadingScreen.instance.HideLoadingSpinner();
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("EndUserLicense");
 
         if (result.NewlyCreated)
         {
@@ -58,11 +76,40 @@ public class PlayFabManager : MonoBehaviour
             // If the user is not new, load the main game scene
             UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene");
         }
+
+        //Optionally save server data locally for offline use
+        SaveOnlineDataLocally();
     }
 
     private void OnLoginMobileFailure(PlayFabError error)
     {
         Debug.Log(error.GenerateErrorReport());
+        Debug.LogWarning("Falling back to offline data");
+        LoadOfflineData();
+    }
+
+    private void LoadOfflineData()
+    {
+        gameData.LoadGame();
+        UnityEngine.SceneManagement.SceneManager.LoadScene("MainScene"); // Load directly into the game
+    }
+
+    private void SaveOnlineDataLocally()
+    {
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), result =>
+        {
+            if (result.Data != null && result.Data.ContainsKey("HighScore"))
+            {
+                int serverHighScore = int.Parse(result.Data["HighScore"].Value);
+                PlayerPrefs.SetInt("HighScore", serverHighScore);
+                PlayerPrefs.Save();
+                Debug.Log("Online data saved locally.");
+            }
+        },
+        error =>
+        {
+            Debug.LogError("Failed to fetch user data: " + error.GenerateErrorReport());
+        });
     }
 
     public static string ReturnMobileID()

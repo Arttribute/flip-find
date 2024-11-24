@@ -83,7 +83,15 @@ public class GameManager : MonoBehaviour
         LoadCardBatch();
         LoadBatchBackground();
         GenerateCards();
-        adMob.RequestBanner();
+
+        if (GoogleAdsInitializer.Instance.IsOnline()) // Ensure the ads initializer has a singleton or public instance
+        {
+            adMob.RequestBanner();
+        }
+        else
+        {
+            Debug.LogWarning("No internet connection. Skipping banner ad request.");
+        }
 
 
     }
