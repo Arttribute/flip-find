@@ -4,17 +4,9 @@ using GoogleMobileAds.Api;
 
 public class GoogleAdsInitializer : MonoBehaviour
 {
-    public void Start()
-    {
-        // Initialize the Google Mobile Ads SDK.
-        MobileAds.Initialize((InitializationStatus initStatus) =>
-        {
-            // This callback is called once the MobileAds SDK is initialized.
-        });
+    public static GoogleAdsInitializer Instance;
 
-        //CreateBannerView();
-    }
-
+    private BannerView _bannerView;
 
 #if UNITY_ANDROID
     private string _adUnitId = "ca-app-pub-8809110862008740/7892515696";
@@ -24,11 +16,38 @@ public class GoogleAdsInitializer : MonoBehaviour
   private string _adUnitId = "unused";
 #endif
 
-    BannerView _bannerView;
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void Start()
+    {
+        // Initialize the Google Mobile Ads SDK.
+        MobileAds.Initialize(initStatus =>
+        {
+            Debug.Log("Google Mobile Ads SDK initialized.");
+        });
+
+    }
 
 
     public void RequestBanner()
     {
+        if (!IsOnline())
+        {
+            Debug.LogWarning("Cannot request banner ad. No internet connection.");
+            return;
+        }
+
         Debug.Log("Creating banner view");
 
         // If we already have a banner, destroy the old one.
@@ -37,7 +56,7 @@ public class GoogleAdsInitializer : MonoBehaviour
             DestroyAd();
         }
 
-        // Create a 320x50 banner views at coordinate (0,50) on screen.
+        // Create a banner view at bottom of the screen.
         _bannerView = new BannerView(_adUnitId, AdSize.Banner, AdPosition.Bottom);
 
         // create our request used to load the ad.
@@ -50,6 +69,17 @@ public class GoogleAdsInitializer : MonoBehaviour
 
     public void DestroyAd()
     {
-        _bannerView.Destroy();
+        if (_bannerView != null)
+        {
+            Debug.Log("Destroying banner ad.");
+            _bannerView.Destroy();
+            _bannerView = null;
+        }
+
+    }
+
+    public bool IsOnline()
+    {
+        return Application.internetReachability != NetworkReachability.NotReachable;
     }
 }

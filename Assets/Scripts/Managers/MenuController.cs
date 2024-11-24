@@ -20,9 +20,6 @@ public class MenuController : MonoBehaviour
         float sliderValue = Mathf.Pow(10f, defaultVolume / 20f);
         volumeSlider.value = sliderValue;
 
-        Debug.Log($"Initialized default volume: {defaultVolume} dB");
-        Debug.Log($"Slider initialized to: {volumeSlider.value}");
-
         volumeSlider.onValueChanged.AddListener(setVolume);
 
 
@@ -32,11 +29,6 @@ public class MenuController : MonoBehaviour
     {
         float volume = Mathf.Log10(Mathf.Clamp(sliderValue, 0.001f, 1f)) * 20;
 
-        //float volume = Mathf.Lerp(-80f, 0f, sliderValue);
-
         volumeMixer.SetFloat("Volume", volume);
-
-        Debug.Log($"Slider Value: {sliderValue}");
-        Debug.Log($"Calculated volume (db): {volume}");
     }
 }
