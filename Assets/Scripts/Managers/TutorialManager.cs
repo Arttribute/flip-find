@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -51,6 +52,13 @@ public class TutorialManager : MonoBehaviour
 
         audioSource = gameObject.AddComponent<AudioSource>();
 
+        AudioMixerGroup[] audioMixerGroups = Resources.Load<AudioMixer>("VolumeMixer").FindMatchingGroups("Master");
+
+        if (audioMixerGroups.Length > 0)
+        {
+            audioSource.outputAudioMixerGroup = audioMixerGroups[0];
+        }
+
         pauseButton.onClick.AddListener(OnPauseButtonClicked);
         backButton.onClick.AddListener(OnBackButtonClicked);
     }
@@ -61,7 +69,6 @@ public class TutorialManager : MonoBehaviour
         tutorialMessage.SetActive(true);
         tutorialText.text = "Flip the indicated card";
         GenerateCards();
-        //timer.ResetTimer();
         PlayBackgroundMusic();
 
         // Initially hide the pause menu
@@ -172,7 +179,13 @@ public class TutorialManager : MonoBehaviour
 
                 if (card.IsMatched)
                 {
-                    tutorialText.text = "Tutorial Complete! Flip all cards";
+                    tutorialText.text = "Tutorial Complete! Flip and match all cards";
+                    break;
+
+                }
+                if (firstFlippedCard.cardFront != secondFlippedCard.cardFront)
+                {
+                    tutorialText.text = "Incorrect. Try again!";
                     break;
                 }
             }
