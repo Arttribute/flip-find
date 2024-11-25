@@ -1567,7 +1567,7 @@ MonoBehaviour:
   menuTransform: {fileID: 3090820517037479795}
   showAnimationDuration: 0.2
   hideAnimationDuration: 0.1
-  hiddenPosition: {x: -700, y: 0}
+  hiddenPosition: {x: -1000, y: 0}
   shownPosition: {x: 0, y: 0}
 --- !u!1 &3896433680677841626
 GameObject:
