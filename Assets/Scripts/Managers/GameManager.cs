@@ -4,7 +4,7 @@ using UnityEngine.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using DG.Tweening; // Make sure to include the DOTween namespace
+using DG.Tweening;// Make sure to include the DOTween namespace
 
 public class GameManager : MonoBehaviour
 {
@@ -25,12 +25,18 @@ public class GameManager : MonoBehaviour
     public CardBatch[] cardBatches;
     public Sprite[] batchBackground;
 
+    [SerializeField] private Animator heartAnimator;
+
     [SerializeField] private Image gameBackground;
-    [SerializeField] private TMP_Text _feedBackMessage;
+    [SerializeField] private Image heart;
+
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject feedbackBackground;
     [SerializeField] private GameObject gameOverbackground;
+
     [SerializeField] private TMP_Text totalScore;
+    [SerializeField] private TMP_Text moveCounter;
+    [SerializeField] private TMP_Text _feedBackMessage;
     [SerializeField] private TMP_Text lastLevel;
     [SerializeField] private TMP_Text finalTime;
 
@@ -38,6 +44,7 @@ public class GameManager : MonoBehaviour
     private Card firstFlippedCard;
     private Card secondFlippedCard;
     private int currentMoves = 0;
+    private int remainingMoves;
     private const int maxMoves = 36;
     private GameData gameData;
     private GoogleAdsInitializer adMob;
@@ -83,6 +90,8 @@ public class GameManager : MonoBehaviour
         LoadCardBatch();
         LoadBatchBackground();
         GenerateCards();
+        remainingMoves = maxMoves;
+        moveCounter.text = remainingMoves.ToString();
 
         if (GoogleAdsInitializer.Instance.IsOnline()) // Ensure the ads initializer has a singleton or public instance
         {
@@ -182,6 +191,21 @@ public class GameManager : MonoBehaviour
         PlayFlipSound();
 
         currentMoves++;
+        remainingMoves--;
+        moveCounter.text = remainingMoves.ToString();
+
+        if (remainingMoves <= 24)
+        {
+            heartAnimator.SetBool("isLow", true);
+            moveCounter.color = Color.yellow;
+        }
+
+        if (remainingMoves <= 12)
+        {
+            heartAnimator.SetBool("isVeryLow", true);
+            moveCounter.color = Color.red;
+        }
+
 
         if (currentMoves > maxMoves)
         {
@@ -284,6 +308,7 @@ public class GameManager : MonoBehaviour
             LoadBatchBackground();
             UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
             currentMoves = 0;
+            remainingMoves = maxMoves;
             RefreshGame(); // Refresh the game when level is completed
 
         }

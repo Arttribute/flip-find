@@ -145,9 +145,6 @@ public class TutorialManager : MonoBehaviour
             firstFlippedCard.SetMatched();
             secondFlippedCard.SetMatched();
 
-            // Show score message
-            // CollectablesManager.instance.ShowScoreMessage();
-
             // Update score
             UIManager.Instance.AddScore(10); // Add points for a correct match
 
