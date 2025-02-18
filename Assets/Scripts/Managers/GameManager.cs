@@ -88,9 +88,10 @@ public class GameManager : MonoBehaviour
 
         gameData.LoadGame();
         LoadCardBatch();
-        LoadBatchBackground();
+        //LoadBatchBackground();
         GenerateCards();
         remainingMoves = maxMoves;
+        heartAnimator.SetBool("Reset", false);
         moveCounter.text = remainingMoves.ToString();
 
         if (GoogleAdsInitializer.Instance.IsOnline()) // Ensure the ads initializer has a singleton or public instance
@@ -196,12 +197,14 @@ public class GameManager : MonoBehaviour
 
         if (remainingMoves <= 24)
         {
+            heartAnimator.SetBool("Reset", false);
             heartAnimator.SetBool("isLow", true);
             moveCounter.color = Color.yellow;
         }
 
         if (remainingMoves <= 12)
         {
+            heartAnimator.SetBool("Reset", false);
             heartAnimator.SetBool("isVeryLow", true);
             moveCounter.color = Color.red;
         }
@@ -305,10 +308,11 @@ public class GameManager : MonoBehaviour
         {
             CollectablesManager.instance.OnLevelUp();
 
-            LoadBatchBackground();
+            //LoadBatchBackground();
             UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
             currentMoves = 0;
             remainingMoves = maxMoves;
+
             RefreshGame(); // Refresh the game when level is completed
 
         }
@@ -341,7 +345,13 @@ public class GameManager : MonoBehaviour
         }
         // Load a new card batch and generate new cards
         LoadCardBatch();
-        LoadBatchBackground();
+        //LoadBatchBackground();
+
+        heartAnimator.SetBool("Reset", true);
+        heartAnimator.SetBool("isLow", false);
+        heartAnimator.SetBool("isVeryLow", false);
+        moveCounter.color = Color.green;
+        moveCounter.text = remainingMoves.ToString();
 
         GenerateCards();
 
@@ -352,6 +362,7 @@ public class GameManager : MonoBehaviour
         _newGame = true;
         CollectablesManager.instance.ResetCurrentLevel();
         currentMoves = 0;
+        remainingMoves = maxMoves;
 
         UIManager.Instance.ResetScore(); // Optionally reset the score for the next level
         UIManager.Instance.SetScore(0);
@@ -367,6 +378,10 @@ public class GameManager : MonoBehaviour
     public void OpenMainMenu()
     {
         //RestartGame();
+        currentMoves = 0;
+        remainingMoves = maxMoves;
+        RefreshGame();
+        gameOverbackground.SetActive(false);
         mainMenu.SetActive(true);
 
 
