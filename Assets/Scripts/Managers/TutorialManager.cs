@@ -18,17 +18,25 @@ public class TutorialManager : MonoBehaviour
     public Image fullImageDisplay; // Image component to display the full image
     public Sprite[] cardImages;
 
-    [SerializeField] private TMP_Text tutorialText;
+    [SerializeField] private Animator heartAnimator;
+    [SerializeField] private Button clickAnywhere;
+    [SerializeField] private Button pauseButton; // Reference to the pause button
+    [SerializeField] private Button backButton; // Reference to the back button
     [SerializeField] private GameObject tutorialPointer;
     [SerializeField] private GameObject tutorialMessage;
 
     [SerializeField] private GameObject pauseMenu; // Reference to the pause menu
-    [SerializeField] private Button pauseButton; // Reference to the pause button
-    [SerializeField] private Button backButton; // Reference to the back button
 
-    private Timer timer;
+    [SerializeField] private TMP_Text tutorialText;
+    [SerializeField] private TMP_Text moveCounter;
+
+
     private Card firstFlippedCard;
     private Card secondFlippedCard;
+    private int currentMoves = 0;
+    private int remainingMoves;
+    private const int maxMoves = 36;
+    private Timer timer;
 
     [SerializeField] private bool isTutorialCompleted;
     [SerializeField] private AudioClip backgroundMusic; // Reference to the background music AudioClip
@@ -67,9 +75,13 @@ public class TutorialManager : MonoBehaviour
     {
         tutorialPointer.SetActive(true);
         tutorialMessage.SetActive(true);
+        //tutorialText.text = "Welcome to FlipnFind! Click on the box to continue.";
         tutorialText.text = "Flip the indicated card";
         GenerateCards();
         PlayBackgroundMusic();
+        remainingMoves = maxMoves;
+        heartAnimator.SetBool("Reset", false);
+        moveCounter.text = remainingMoves.ToString();
 
         // Initially hide the pause menu
         pauseMenu.SetActive(false);
@@ -132,6 +144,29 @@ public class TutorialManager : MonoBehaviour
             StartCoroutine(CheckForMatch());
         }
         PlayFlipSound();
+
+        currentMoves++;
+        remainingMoves--;
+        moveCounter.text = remainingMoves.ToString();
+
+        if (remainingMoves <= 24)
+        {
+            heartAnimator.SetBool("Reset", false);
+            heartAnimator.SetBool("isLow", true);
+            moveCounter.color = Color.yellow;
+        }
+
+        if (remainingMoves <= 12)
+        {
+            heartAnimator.SetBool("Reset", false);
+            heartAnimator.SetBool("isVeryLow", true);
+            moveCounter.color = Color.red;
+        }
+
+        if (remainingMoves <= 0)
+        {
+            moveCounter.text = "0";
+        }
     }
 
     private IEnumerator CheckForMatch()
@@ -176,14 +211,19 @@ public class TutorialManager : MonoBehaviour
 
                 if (card.IsMatched)
                 {
+                    isTutorialCompleted = true;
                     tutorialText.text = "Tutorial Complete! Flip and match all cards";
                     break;
 
                 }
-                if (firstFlippedCard.cardFront != secondFlippedCard.cardFront)
+                if (!isTutorialCompleted)
                 {
-                    tutorialText.text = "Incorrect. Try again!";
-                    break;
+                    if (firstFlippedCard.cardFront != secondFlippedCard.cardFront)
+                    {
+                        tutorialText.text = "Incorrect. Try again!";
+                        break;
+                    }
+
                 }
             }
         }
@@ -215,12 +255,6 @@ public class TutorialManager : MonoBehaviour
         return true;
     }
 
-    public void StartTutorial()
-    {
-        //isTutorialCompleted = false;
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Tutorial");
-    }
-
     private void OnTutorialComplete()
     {
         //isTutorialCompleted = true;
@@ -245,6 +279,11 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    public void clickAnywhereButtonClicked()
+    {
+        tutorialText.text = "This is the";
+    }
+
     private void OnPauseButtonClicked()
     {
         if (!isPaused)
@@ -265,6 +304,7 @@ public class TutorialManager : MonoBehaviour
     private IEnumerator PauseGameCoroutine()
     {
         // Animate the menu from left to right
+        tutorialMessage.SetActive(false);
         pauseMenu.SetActive(true);
         pauseMenu.transform.DOMoveX(Screen.width / 2, 0.5f).SetEase(Ease.OutQuad);
         yield return new WaitForSecondsRealtime(0.5f); // Wait for the animation to complete
@@ -277,6 +317,7 @@ public class TutorialManager : MonoBehaviour
         pauseMenu.transform.DOMoveX(-Screen.width / 2, 0.5f).SetEase(Ease.OutQuad);
         yield return new WaitForSecondsRealtime(0.5f); // Wait for the animation to complete
         pauseMenu.SetActive(false);
+        tutorialMessage.SetActive(true);
         Time.timeScale = 1f; // Resume the game
         isPaused = false;
     }

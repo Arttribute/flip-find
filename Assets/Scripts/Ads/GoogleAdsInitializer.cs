@@ -7,13 +7,15 @@ public class GoogleAdsInitializer : MonoBehaviour
     public static GoogleAdsInitializer Instance;
 
     private BannerView _bannerView;
+    private InterstitialAd _interstitialAd;
 
 #if UNITY_ANDROID
-    private string _adUnitId = "ca-app-pub-8809110862008740/7892515696";
+    private string _banneradUnitId = "ca-app-pub-8809110862008740/7892515696";
+    private string _interstitialadUnitId = "ca-app-pub-8809110862008740/3393377769";
 #elif UNITY_IPHONE
-  private string _adUnitId = "ca-app-pub-3940256099942544/2934735716";
+  private string _banneradUnitId = "ca-app-pub-3940256099942544/2934735716";
 #else
-  private string _adUnitId = "unused";
+  private string _banneradUnitId = "unused";
 #endif
 
     private void Awake()
@@ -57,7 +59,7 @@ public class GoogleAdsInitializer : MonoBehaviour
         }
 
         // Create a banner view at bottom of the screen.
-        _bannerView = new BannerView(_adUnitId, AdSize.Banner, AdPosition.Bottom);
+        _bannerView = new BannerView(_banneradUnitId, AdSize.Banner, AdPosition.Bottom);
 
         // create our request used to load the ad.
         var adRequest = new AdRequest();
@@ -65,6 +67,18 @@ public class GoogleAdsInitializer : MonoBehaviour
         // send the request to load the ad.
         Debug.Log("Loading banner ad.");
         _bannerView.LoadAd(adRequest);
+    }
+    public void RequestInterstitial()
+    {
+        if (_interstitialAd != null)
+        {
+            _interstitialAd.Destroy();
+        }
+
+        //_interstitialAd = new InterstitialAd(_interstitialadUnitId);
+
+
+
     }
 
     public void DestroyAd()
